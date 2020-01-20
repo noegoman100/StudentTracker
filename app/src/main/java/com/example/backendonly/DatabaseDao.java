@@ -10,8 +10,11 @@ import java.util.List;
 
 @Dao
 public interface DatabaseDao {
-    @Query("Select * from term")
+    @Query("SELECT * FROM term")
     List<Term> getTermList();
+
+//    @Query("SELECT * FROM course WHERE term_id = :selectedTerm")
+//    List<Course> getCourseList(int selectedTerm);
 
     @Insert
     void insertTerm(Term term);

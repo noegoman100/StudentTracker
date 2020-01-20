@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 // ------------- Database Stuff
         BasicDatabase db = BasicDatabase.getInstance(getApplicationContext());
+        FullDatabase database = FullDatabase.getInstance(getApplicationContext());
 
 // -------------- End Database Stuff
 
