@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 // ------------- Database Stuff
-        BasicDatabase db = BasicDatabase.getInstance(getApplicationContext());
+        FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         FullDatabase database = FullDatabase.getInstance(getApplicationContext());
 
 // -------------- End Database Stuff
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 System.out.println("addTermFAB clicked");
 
-                BasicDatabase db = BasicDatabase.getInstance(getApplicationContext());
+                FullDatabase db = FullDatabase.getInstance(getApplicationContext());
                 int dbCount = db.databaseDao().getTermList().size() + 1;
                 Term tempTerm1 = new Term();
                 tempTerm1.setTerm_name("Term " + dbCount);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateList() { //This updates the listView on this mainActivity
-        BasicDatabase db = BasicDatabase.getInstance(getApplicationContext());
+        FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         List<Term> allTerms = db.databaseDao().getTermList();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
 

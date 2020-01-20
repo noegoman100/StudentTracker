@@ -26,7 +26,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
     private void updateList() { //This updates the listView on this mainActivity
-        BasicDatabase db = BasicDatabase.getInstance(getApplicationContext());
+        FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         List<Term> allTerms = db.databaseDao().getTermList();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
 
