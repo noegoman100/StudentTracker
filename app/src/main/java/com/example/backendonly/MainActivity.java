@@ -1,30 +1,20 @@
 package com.example.backendonly;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    //TextView textView;
-    //TextView longView;
-    //TextView dateView;
-    //TextView anotherLongView;
+
     ListView listView;
     String[] listItem;
 
@@ -44,24 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
 // -------------- ListView Stuff
 
-        //move me to a method.
-        List<Term> allUsers = db.databaseDao().getTermList();
-        System.out.println("Number of Rows in User Table: " + allUsers.size());
-
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("Item Clicked: " + position);
+                Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+            }
+        });
         updateList();
-        String newText = Integer.toString(allUsers.size());
-
-        Date date = new Date();
-        Instant instant = date.toInstant();
-        Long time = date.getTime();
-
-        System.out.println("Time: " + time);
-        System.out.println("Instant: " + instant.toString());
-
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-
-
 
 // -------------- End ListView Stuff
 
@@ -89,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     } // END onCreate
 
 
-    private void updateList() { //This updates this listView on this mainActivity
+    private void updateList() { //This updates the listView on this mainActivity
         BasicDatabase db = BasicDatabase.getInstance(getApplicationContext());
         List<Term> allTerms = db.databaseDao().getTermList();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
@@ -104,14 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Item Clicked: " + position);
-            }
-        });
+
         adapter.notifyDataSetChanged();
     }
 }
