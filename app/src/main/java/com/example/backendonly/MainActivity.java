@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 // ------------- Database Stuff
         Context tempContext = getApplicationContext();
 //        tempContext.deleteDatabase(getString(R.string.database_name));
-        tempContext.deleteDatabase("full_db8");
+        //tempContext.deleteDatabase("full_db8");
 
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         FullDatabase database = FullDatabase.getInstance(getApplicationContext());
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Item Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-                intent.putExtra("position", position);
+                intent.putExtra("position", position + 1);
                 startActivity(intent);
             }
         });

@@ -18,12 +18,14 @@ public class TermDetailsActivity extends AppCompatActivity {
     ListView courseListView;
     Intent intent;
     int position;
+    FullDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
         courseListView = findViewById(R.id.courseListView);
+        db = FullDatabase.getInstance(getApplicationContext());
 
         TextView positionExtraView = findViewById(R.id.positionExtraView);
         intent = getIntent();
@@ -46,11 +48,12 @@ public class TermDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 System.out.println("addCourseFAB clicked");
 //
-//                FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-//                int dbCount = db.termDao().getTermList().size() + 1;
+
+                int dbCount = db.courseDao().getCourseList(position).size() + 1;
                 Course tempCourse = new Course();
-                tempCourse.setCourse_name("Course Added");
-                //db.databaseDao().insertCourse(tempCourse);   //May need to create a new DAO for this table.
+                tempCourse.setCourse_name("Course Added " + dbCount);
+                db.courseDao().addCourse(position); //Crashes app on position=0
+                //db.courseDao().insertCourse(tempCourse); //Crashes App
                 //ArrayAdapter<String> tempAdapter = listView.
                 updateCourseList();
 
@@ -62,10 +65,10 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
     private void updateCourseList() { //This updates the listView on this mainActivity
-        FullDatabase db = FullDatabase.getInstance(getApplicationContext());
+        //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         //intent = getIntent();
         //int selectedTerm = intent.getIntExtra("", 0);
-        List<Course> allCourses = db.termDao().getCourseList(position);
+        List<Course> allCourses = db.courseDao().getCourseList(position);
         System.out.println("Number of Rows in Course Query: " + allCourses.size());
 
 

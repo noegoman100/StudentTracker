@@ -15,8 +15,8 @@ public interface TermDao {
 
 //    @Query("SELECT * FROM course_table WHERE term_id = :selectedTerm")
 //    List<Course> getCourseList(int selectedTerm);
-    @Query("SELECT * FROM course_table WHERE term_id_fk = :selectedTerm")
-    List<Course> getCourseList(int selectedTerm);
+//    @Query("SELECT * FROM course_table WHERE term_id_fk = :selectedTerm")
+//    List<Course> getCourseList(int selectedTerm);
 
 
     @Insert
