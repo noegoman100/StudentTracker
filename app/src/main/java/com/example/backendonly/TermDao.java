@@ -9,7 +9,7 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface DatabaseDao {
+public interface TermDao {
     @Query("SELECT * FROM term_table")
     List<Term> getTermList();
 
@@ -33,4 +33,5 @@ public interface DatabaseDao {
 
     @Query("DELETE FROM term_table")
     public void nukeTermTable();
+
 }

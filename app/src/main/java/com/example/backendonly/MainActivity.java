@@ -17,7 +17,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
-    String[] listItem;
+    //String[] listItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.listView);
-        listItem = getResources().getStringArray(R.array.array_technology);
+        //listItem = getResources().getStringArray(R.array.array_technology);
 
 
 // ------------- Database Stuff
         Context tempContext = getApplicationContext();
+//        tempContext.deleteDatabase(getString(R.string.database_name));
         tempContext.deleteDatabase("full_db8");
 
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
@@ -60,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("addTermFAB clicked");
 
                 FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-                int dbCount = db.databaseDao().getTermList().size() + 1;
+                int dbCount = db.termDao().getTermList().size() + 1;
                 Term tempTerm1 = new Term();
                 tempTerm1.setTerm_name("Term " + dbCount);
-                db.databaseDao().insertTerm(tempTerm1);
+                db.termDao().insertTerm(tempTerm1);
                 //ArrayAdapter<String> tempAdapter = listView.
                 updateList();
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateList() { //This updates the listView on this mainActivity
         FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-        List<Term> allTerms = db.databaseDao().getTermList();
+        List<Term> allTerms = db.termDao().getTermList();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
 
 

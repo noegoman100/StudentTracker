@@ -1,6 +1,7 @@
 package com.example.backendonly;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -9,6 +10,8 @@ import androidx.room.TypeConverters;
 
 @Database(entities = {Term.class, Course.class}, exportSchema = false, version = 1)
 public abstract class FullDatabase extends RoomDatabase {
+
+//    private static final String DB_NAME = Resources.getSystem().getString(R.string.database_name);
     private static final String DB_NAME = "full_db8";
     private static FullDatabase instance;
 
@@ -20,5 +23,5 @@ public abstract class FullDatabase extends RoomDatabase {
         return instance;
     }
 
-    public abstract DatabaseDao databaseDao();
+    public abstract TermDao termDao();
 }
