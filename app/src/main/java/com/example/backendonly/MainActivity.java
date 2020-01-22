@@ -2,6 +2,7 @@ package com.example.backendonly;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 // ------------- Database Stuff
-        FullDatabase db = FullDatabase.getInstance(getApplicationContext());
+        Context tempContext = getApplicationContext();
+        tempContext.deleteDatabase("full_db8");
+
+        //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         FullDatabase database = FullDatabase.getInstance(getApplicationContext());
 
 // -------------- End Database Stuff

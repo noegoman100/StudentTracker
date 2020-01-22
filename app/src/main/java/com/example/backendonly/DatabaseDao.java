@@ -10,11 +10,14 @@ import java.util.List;
 
 @Dao
 public interface DatabaseDao {
-    @Query("SELECT * FROM term")
+    @Query("SELECT * FROM term_table")
     List<Term> getTermList();
 
-//    @Query("SELECT * FROM course WHERE term_id = :selectedTerm")
+//    @Query("SELECT * FROM course_table WHERE term_id = :selectedTerm")
 //    List<Course> getCourseList(int selectedTerm);
+    @Query("SELECT * FROM course_table WHERE term_id_fk = :selectedTerm")
+    List<Course> getCourseList(int selectedTerm);
+
 
     @Insert
     void insertTerm(Term term);
@@ -28,6 +31,6 @@ public interface DatabaseDao {
     @Delete
     void deleteTerm(Term term);
 
-    @Query("DELETE FROM term")
+    @Query("DELETE FROM term_table")
     public void nukeTermTable();
 }

@@ -3,27 +3,28 @@ package com.example.backendonly;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
 @Entity(
-        tableName = "course",
+        tableName = "course_table",
         foreignKeys = @ForeignKey(
                 entity = Term.class,
-                parentColumns = "id",
-                childColumns = "term_id"
-        ))
+                parentColumns = "term_id",
+                childColumns = "term_id_fk")
+        )
 public class Course {
     @PrimaryKey(autoGenerate = true)
     private int course_id;
-    @ColumnInfo(name = "term_id")
-    private int term_id;
+    @ColumnInfo(name = "term_id_fk")
+    private int term_id_fk;
     @ColumnInfo(name = "course_name")
     private String course_name;
     @ColumnInfo(name = "course_start")
-    private long course_start;
+    private String course_start;
     @ColumnInfo(name = "course_end")
-    private long course_end;
+    private String course_end;
     @ColumnInfo(name = "course_status")
     private String course_status;
     @ColumnInfo(name = "course_notes")
@@ -37,12 +38,12 @@ public class Course {
         this.course_id = course_id;
     }
 
-    public int getTerm_id() {
-        return term_id;
+    public int getTerm_id_fk() {
+        return term_id_fk;
     }
 
-    public void setTerm_id(int term_id) {
-        this.term_id = term_id;
+    public void setTerm_id_fk(int term_id_fk) {
+        this.term_id_fk = term_id_fk;
     }
 
     public String getCourse_name() {
@@ -53,19 +54,19 @@ public class Course {
         this.course_name = course_name;
     }
 
-    public long getCourse_start() {
+    public String getCourse_start() {
         return course_start;
     }
 
-    public void setCourse_start(long course_start) {
+    public void setCourse_start(String course_start) {
         this.course_start = course_start;
     }
 
-    public long getCourse_end() {
+    public String getCourse_end() {
         return course_end;
     }
 
-    public void setCourse_end(long course_end) {
+    public void setCourse_end(String course_end) {
         this.course_end = course_end;
     }
 

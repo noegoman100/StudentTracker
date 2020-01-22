@@ -5,22 +5,23 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "term")
+@Entity(tableName = "term_table")
 public class Term {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int term_id;
     @ColumnInfo(name = "term_name")
     private String term_name;
 
 //    private OffsetDateTime term_start;
 //    private OffsetDateTime term_end;
 
-    public int getId() {
-        return id;
+
+    public int getTerm_id() {
+        return term_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTerm_id(int term_id) {
+        this.term_id = term_id;
     }
 
     public String getTerm_name() {
@@ -30,4 +31,5 @@ public class Term {
     public void setTerm_name(String term_name) {
         this.term_name = term_name;
     }
+
 }

@@ -8,9 +8,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 @Database(entities = {Term.class, Course.class}, exportSchema = false, version = 1)
-@TypeConverters({Converters.class})
 public abstract class FullDatabase extends RoomDatabase {
-    private static final String DB_NAME = "full_db1";
+    private static final String DB_NAME = "full_db8";
     private static FullDatabase instance;
 
     public static synchronized FullDatabase getInstance(Context context) {
