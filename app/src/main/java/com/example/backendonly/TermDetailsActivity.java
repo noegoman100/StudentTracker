@@ -12,10 +12,14 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TermDetailsActivity extends AppCompatActivity {
     ListView courseListView;
+    TextView termStartTextView;
     Intent intent;
     int position;
     FullDatabase db;
@@ -25,18 +29,33 @@ public class TermDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
         courseListView = findViewById(R.id.courseListView);
+        termStartTextView = findViewById(R.id.termStartTextView);
         db = FullDatabase.getInstance(getApplicationContext());
-
-        TextView positionExtraView = findViewById(R.id.positionExtraView);
+        TextView positionExtraView = findViewById(R.id.termTitleTextView);
         intent = getIntent();
+
+
         position = intent.getIntExtra("position", 0);
-        System.out.println(position);
-        positionExtraView.setText(Integer.toString(position));
+        System.out.println("Term Detail (with Courses) Received position: " + position);
+        positionExtraView.setText("Received from Intent - Position: " + Integer.toString(position));
+
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        try {
+            Date currentDateTime = db.termDao().getTermList().get(position-1).getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
+            //termStartTextView.setText(formatter.parse(currentDatTime.toString()).toString());
+            //String millisecondDate = currentDateTime.toString();
+            System.out.println("Millisecond Date: " + currentDateTime.toString());
+            String temp = formatter.format(currentDateTime);
+            System.out.println("Formatted Date: " + temp);
+            termStartTextView.setText(temp);
+
+        } catch (Exception e) {termStartTextView.setText("could not format");}
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Item Clicked: " + position);
+                System.out.println("Course Clicked: " + position);
             }
         });
         updateCourseList();
@@ -68,8 +87,12 @@ public class TermDetailsActivity extends AppCompatActivity {
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         //intent = getIntent();
         //int selectedTerm = intent.getIntExtra("", 0);
-        List<Course> allCourses = db.courseDao().getCourseList(position);
-        System.out.println("Number of Rows in Course Query: " + allCourses.size());
+        List<Course> allCourses = new ArrayList<>();
+        try {
+            allCourses = db.courseDao().getCourseList(position);
+            System.out.println("Number of Rows in Course Query: " + allCourses.size());
+        } catch (Exception e) {System.out.println("could not pull query");}
+
 
 
 

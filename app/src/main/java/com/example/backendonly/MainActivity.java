@@ -12,6 +12,9 @@ import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Date;
+import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Item Clicked: " + position);
+                System.out.println("Term Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
                 intent.putExtra("position", position + 1);
                 startActivity(intent);
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 int dbCount = db.termDao().getTermList().size() + 1;
                 Term tempTerm1 = new Term();
                 tempTerm1.setTerm_name("Term " + dbCount);
+                tempTerm1.setTerm_start(Date.from(Instant.now()));
                 db.termDao().insertTerm(tempTerm1);
                 //ArrayAdapter<String> tempAdapter = listView.
                 updateList();

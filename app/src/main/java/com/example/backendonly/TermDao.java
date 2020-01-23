@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface TermDao {
-    @Query("SELECT * FROM term_table")
+    @Query("SELECT * FROM term_table ORDER BY term_id")
     List<Term> getTermList();
 
 //    @Query("SELECT * FROM course_table WHERE term_id = :selectedTerm")

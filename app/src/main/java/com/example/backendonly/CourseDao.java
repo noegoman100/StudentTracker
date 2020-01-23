@@ -17,7 +17,6 @@ public interface CourseDao {
             "VALUES(:position, \"Course Name\"); ")
     void addCourse(int position);
 
-    //This shouldn't work - Insert Course needs to know the FK
     @Insert
     void insertCourse(Course course);
 
