@@ -33,6 +33,8 @@ public class TermDetailsActivity extends AppCompatActivity {
         db = FullDatabase.getInstance(getApplicationContext());
         TextView positionExtraView = findViewById(R.id.termTitleTextView);
         intent = getIntent();
+        //getActionBar().setTitle("Term Details");
+        setTitle("Term Details");
 
 
         position = intent.getIntExtra("position", 0);
