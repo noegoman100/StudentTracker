@@ -6,14 +6,18 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 
 @Entity(
         tableName = "course_table",
         foreignKeys = @ForeignKey(
                 entity = Term.class,
                 parentColumns = "term_id",
-                childColumns = "term_id_fk")
+                childColumns = "term_id_fk",
+                onDelete = CASCADE
         )
+)
 public class Course {
     @PrimaryKey(autoGenerate = true)
     private int course_id;

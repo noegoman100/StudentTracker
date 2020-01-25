@@ -10,12 +10,12 @@ import java.util.List;
 
 @Dao
 public interface CourseDao {
-    @Query("SELECT * FROM course_table WHERE term_id_fk = :selectedTerm")
-    List<Course> getCourseList(int selectedTerm);
+    @Query("SELECT * FROM course_table WHERE term_id_fk = :termId")
+    List<Course> getCourseList(int termId);
 
     @Query("INSERT INTO course_table (term_id_fk, course_name)\n" +
-            "VALUES(:position, \"Course Name\"); ")
-    void addCourse(int position);
+            "VALUES(:termId, \"Course Name\"); ")
+    void addCourse(int termId);
 
     @Insert
     void insertCourse(Course course);

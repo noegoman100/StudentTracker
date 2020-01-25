@@ -21,7 +21,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     ListView courseListView;
     TextView termStartTextView;
     Intent intent;
-    int position;
+    int termId;
     FullDatabase db;
 
     @Override
@@ -35,16 +35,14 @@ public class TermDetailsActivity extends AppCompatActivity {
         intent = getIntent();
         //getActionBar().setTitle("Term Details");
         setTitle("Term Details");
-
-
-        position = intent.getIntExtra("position", 0);
-        System.out.println("Term Detail (with Courses) Received position: " + position);
-        positionExtraView.setText("Received from Intent - Position: " + Integer.toString(position));
+        termId = intent.getIntExtra("termId", -1);
+        //System.out.println("Term Detail (with Courses) Received position: " + position);
+        positionExtraView.setText("Received from Intent - TermId: " + termId);
 
 
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         try {
-            Date currentDateTime = db.termDao().getTermList().get(position-1).getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
+            Date currentDateTime = db.termDao().getTerm(termId).getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
             //termStartTextView.setText(formatter.parse(currentDatTime.toString()).toString());
             //String millisecondDate = currentDateTime.toString();
             System.out.println("Millisecond Date: " + currentDateTime.toString());
@@ -62,7 +60,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         });
         updateCourseList();
 
-// -------------- FAB Stuff
+// -------------- FAB Add Stuff
         FloatingActionButton addCourseFAB = findViewById(R.id.addCourseFAB);
         addCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,10 +68,10 @@ public class TermDetailsActivity extends AppCompatActivity {
                 System.out.println("addCourseFAB clicked");
 //
 
-                int dbCount = db.courseDao().getCourseList(position).size() + 1;
+                int dbCount = db.courseDao().getCourseList(termId).size() + 1;
                 Course tempCourse = new Course();
                 tempCourse.setCourse_name("Course Added " + dbCount);
-                db.courseDao().addCourse(position); //Crashes app on position=0
+                db.courseDao().addCourse(termId); //Crashes app on position=0
                 //db.courseDao().insertCourse(tempCourse); //Crashes App
                 //ArrayAdapter<String> tempAdapter = listView.
                 updateCourseList();
@@ -81,7 +79,23 @@ public class TermDetailsActivity extends AppCompatActivity {
             }
         });
 
-// -------------- End FAB Stuff
+// -------------- End FAB Add Stuff
+
+// -------------- FAB Edit Stuff
+        FloatingActionButton editTermFAB = findViewById(R.id.editTermFAB);
+        editTermFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("FAB Edit stuff pressed. ");
+                Term tempTerm = db.termDao().getTerm(termId);
+                System.out.println("Current Term Name: " + tempTerm.getTerm_name());
+                db.termDao().deleteTerm(tempTerm); //Seems to be causing problems. Not sure where, yet.
+                //updateCourseList();
+                finish();
+            }
+        });
+
+// -------------- End FAB Edit Stuff
 
     }
 
@@ -91,7 +105,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         //int selectedTerm = intent.getIntExtra("", 0);
         List<Course> allCourses = new ArrayList<>();
         try {
-            allCourses = db.courseDao().getCourseList(position);
+            allCourses = db.courseDao().getCourseList(termId);
             System.out.println("Number of Rows in Course Query: " + allCourses.size());
         } catch (Exception e) {System.out.println("could not pull query");}
 

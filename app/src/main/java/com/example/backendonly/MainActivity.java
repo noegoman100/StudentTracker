@@ -19,9 +19,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    FullDatabase db;
     ListView listView;
     //String[] listItem;
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateList();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,26 +35,25 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Term List");
         listView = findViewById(R.id.listView);
         //listItem = getResources().getStringArray(R.array.array_technology);
-
-
-// ------------- Database Stuff
+        db = FullDatabase.getInstance(getApplicationContext());
         Context tempContext = getApplicationContext();
-//        tempContext.deleteDatabase(getString(R.string.database_name));
-        //tempContext.deleteDatabase("full_db8");
 
-        //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-        FullDatabase database = FullDatabase.getInstance(getApplicationContext());
-
-// -------------- End Database Stuff
 
 // -------------- ListView Stuff
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Term Clicked: " + position);
+                System.out.println("Position Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-                intent.putExtra("position", position + 1);
+                int term_id;
+                List<Term> termList = db.termDao().getTermList();
+                for (Term term: termList) {
+                    System.out.println(term.getTerm_id());
+                }
+                term_id = termList.get(position).getTerm_id();
+                intent.putExtra("termId", term_id);
+                System.out.println("term_id at 0: " + term_id);
                 startActivity(intent);
             }
         });
@@ -64,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 System.out.println("addTermFAB clicked");
 
-                FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-                int dbCount = db.termDao().getTermList().size() + 1;
+                //db = FullDatabase.getInstance(getApplicationContext());
+                //int dbCount = db.termDao().getTermList().size() + 1;
                 Term tempTerm1 = new Term();
-                tempTerm1.setTerm_name("Term " + dbCount);
+                tempTerm1.setTerm_name("Term Added");
                 tempTerm1.setTerm_start(Date.from(Instant.now()));
                 db.termDao().insertTerm(tempTerm1);
                 //ArrayAdapter<String> tempAdapter = listView.
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateList() { //This updates the listView on this mainActivity
-        FullDatabase db = FullDatabase.getInstance(getApplicationContext());
+        //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         List<Term> allTerms = db.termDao().getTermList();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
 
