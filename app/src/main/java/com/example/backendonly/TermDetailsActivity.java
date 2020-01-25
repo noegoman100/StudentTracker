@@ -56,6 +56,9 @@ public class TermDetailsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Course Clicked: " + position);
+                Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
+                startActivity(intent);
+                //todo Send termId AND courseId over as addExtras. 
             }
         });
         updateCourseList();
@@ -89,9 +92,13 @@ public class TermDetailsActivity extends AppCompatActivity {
                 System.out.println("FAB Edit stuff pressed. ");
                 Term tempTerm = db.termDao().getTerm(termId);
                 System.out.println("Current Term Name: " + tempTerm.getTerm_name());
-                db.termDao().deleteTerm(tempTerm); //Seems to be causing problems. Not sure where, yet.
+                //db.termDao().deleteTerm(tempTerm);
                 //updateCourseList();
-                finish();
+                //finish();
+                Intent intent = new Intent(getApplicationContext(), EditTermActivity.class);
+                intent.putExtra("termId", termId);
+
+                startActivity(intent);
             }
         });
 

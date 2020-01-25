@@ -10,7 +10,7 @@ import java.util.List;
 
 @Dao
 public interface CourseDao {
-    @Query("SELECT * FROM course_table WHERE term_id_fk = :termId")
+    @Query("SELECT * FROM course_table WHERE term_id_fk = :termId ORDER BY course_id")
     List<Course> getCourseList(int termId);
 
     @Query("INSERT INTO course_table (term_id_fk, course_name)\n" +
