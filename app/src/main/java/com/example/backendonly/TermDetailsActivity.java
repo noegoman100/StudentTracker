@@ -58,7 +58,7 @@ public class TermDetailsActivity extends AppCompatActivity {
                 System.out.println("Course Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
                 startActivity(intent);
-                //todo Send termId AND courseId over as addExtras. 
+                //todo Send termId AND courseId over as addExtras.
             }
         });
         updateCourseList();
