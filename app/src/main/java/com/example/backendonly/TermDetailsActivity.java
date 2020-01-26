@@ -57,8 +57,13 @@ public class TermDetailsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Course Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
-                startActivity(intent);
+
                 //todo Send termId AND courseId over as addExtras.
+                int courseId = db.courseDao().getCourseList(termId).get(position).getCourse_id();
+                intent.putExtra("termId", termId);
+                intent.putExtra("courseId", courseId);
+
+                startActivity(intent);
             }
         });
         updateCourseList();
