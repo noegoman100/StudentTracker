@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Term tempTerm1 = new Term();
                 tempTerm1.setTerm_name("Term Added");
                 tempTerm1.setTerm_start(Date.from(Instant.now()));
+                tempTerm1.setTerm_end(Date.from(Instant.now()));
                 db.termDao().insertTerm(tempTerm1);
                 //ArrayAdapter<String> tempAdapter = listView.
                 updateList();

@@ -42,11 +42,7 @@ public class Term {
         this.term_start = term_start;
     }
 
-    public Date getTerm_end() {
-        return term_end;
-    }
+    public Date getTerm_end() {return term_end;    }
 
-    public void setTerm_end(Date term_end) {
-        this.term_end = term_end;
-    }
+    public void setTerm_end(Date term_end) {    this.term_end = term_end;    }
 }
