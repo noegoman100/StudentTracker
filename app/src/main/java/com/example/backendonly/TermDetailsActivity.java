@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class TermDetailsActivity extends AppCompatActivity {
     ListView courseListView;
     TextView termStartTextView;
+    TextView termEndTextView;
     Intent intent;
     int termId;
     FullDatabase db;
@@ -30,25 +32,30 @@ public class TermDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_term_details);
         courseListView = findViewById(R.id.courseListView);
         termStartTextView = findViewById(R.id.termStartTextView);
+        termEndTextView = findViewById(R.id.termEndTextView);
         db = FullDatabase.getInstance(getApplicationContext());
-        TextView positionExtraView = findViewById(R.id.termTitleTextView);
+        Term selectedTerm = db.termDao().getTerm(termId);
+        TextView termTitleTextView = findViewById(R.id.termTitleTextView);
         intent = getIntent();
         //getActionBar().setTitle("Term Details");
         setTitle("Term Details");
         termId = intent.getIntExtra("termId", -1);
         //System.out.println("Term Detail (with Courses) Received position: " + position);
-        positionExtraView.setText("Received from Intent - TermId: " + termId);
+        //termTitleTextView.setText(selectedTerm.getTerm_name());
 
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         try {
-            Date currentDateTime = db.termDao().getTerm(termId).getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
+            Date startDate = selectedTerm.getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
+            Date endDate = selectedTerm.getTerm_end();
             //termStartTextView.setText(formatter.parse(currentDatTime.toString()).toString());
             //String millisecondDate = currentDateTime.toString();
-            System.out.println("Millisecond Date: " + currentDateTime.toString());
-            String temp = formatter.format(currentDateTime);
+            System.out.println("Millisecond Date: " + startDate.toString());
+            String temp = formatter.format(startDate);
+            String tempEnd = formatter.format(endDate);
             System.out.println("Formatted Date: " + temp);
             termStartTextView.setText(temp);
+            termEndTextView.setText(tempEnd);
 
         } catch (Exception e) {termStartTextView.setText("could not format");}
 
@@ -69,7 +76,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         updateCourseList();
 
 // -------------- FAB Add Stuff
-        FloatingActionButton addCourseFAB = findViewById(R.id.addCourseFAB);
+        FloatingActionButton addCourseFAB = findViewById(R.id.addTaskFAB);
         addCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +86,8 @@ public class TermDetailsActivity extends AppCompatActivity {
                 int dbCount = db.courseDao().getCourseList(termId).size() + 1;
                 Course tempCourse = new Course();
                 tempCourse.setCourse_name("Course Added " + dbCount);
+                tempCourse.setCourse_start(Date.from(Instant.now()));
+                tempCourse.setCourse_end(Date.from(Instant.now()));
                 db.courseDao().addCourse(termId); //Crashes app on position=0
                 //db.courseDao().insertCourse(tempCourse); //Crashes App
                 //ArrayAdapter<String> tempAdapter = listView.
@@ -90,7 +99,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 // -------------- End FAB Add Stuff
 
 // -------------- FAB Edit Stuff
-        FloatingActionButton editTermFAB = findViewById(R.id.editTermFAB);
+        FloatingActionButton editTermFAB = findViewById(R.id.editCourseFAB);
         editTermFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

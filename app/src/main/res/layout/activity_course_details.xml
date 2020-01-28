@@ -6,28 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".CourseDetailsActivity">
 
-    <EditText
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editCourseFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addTaskFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
         android:id="@+id/courseStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date"
+        android:text="Course Start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseTitleEditText" />
 
-    <EditText
+    <TextView
         android:id="@+id/courseEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="date"
+        android:text="Course End"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseStartDate" />
 
-    <EditText
+    <TextView
         android:id="@+id/courseTitleEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,4 +62,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/courseMentorsButton"
+        android:layout_width="264dp"
+        android:layout_height="50dp"
+        android:text="Course Mentors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseStatusEditText" />
+
+    <Button
+        android:id="@+id/courseNotesButton"
+        android:layout_width="261dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="32dp"
+        android:text="Course Notes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseMentorsButton" />
+
+    <TextView
+        android:id="@+id/courseStatusEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Course Status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseEndDate" />
+
+    <ListView
+        android:id="@+id/taskListView"
+        android:layout_width="409dp"
+        android:layout_height="343dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseNotesButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

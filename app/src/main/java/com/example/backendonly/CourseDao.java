@@ -27,10 +27,10 @@ public interface CourseDao {
     void insertAll(Course... course);
 
     @Update
-    void updateTerm(Course course);
+    void updateCourse(Course course);
 
     @Delete
-    void deleteTerm(Course course);
+    void deleteCourse(Course course);
 
     @Query("DELETE FROM course_table")
     public void nukeCourseTable();
