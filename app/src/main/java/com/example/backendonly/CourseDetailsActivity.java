@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -45,6 +46,16 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
         taskListView = findViewById(R.id.taskListView);
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("Task clicked at position: " + position);
+                Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
+                //todo addExtras
+                startActivity(intent);
+            }
+        });
+
         Course selectedCourse = db.courseDao().getCourse(termId, courseId);
         courseTitle.setText(selectedCourse.getCourse_name());
         try {
@@ -81,7 +92,21 @@ public class CourseDetailsActivity extends AppCompatActivity {
             }
         });
 
-// -------------- End FAB Add Stuff
+        // -------------- End FAB Add Stuff
+        // -------------- FAB Edit Course
+        FloatingActionButton editCourseFAB = findViewById(R.id.editCourseFAB);
+        editCourseFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("editCourseFAB clicked");
+                Intent intent = new Intent(getApplicationContext(), EditCourseActivity.class);
+                //todo addExtras
+                startActivity(intent);
+
+            }
+        });
+
+        // -------------- End FAB Edit Course
     }
 
     private void updateTaskList() { //This updates the listView on this Course Details Activity
