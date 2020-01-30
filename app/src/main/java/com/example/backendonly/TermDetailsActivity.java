@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,9 +20,11 @@ import java.util.Date;
 import java.util.List;
 
 public class TermDetailsActivity extends AppCompatActivity {
+    static final String LOG_TAG = "TermDetAct";
     ListView courseListView;
     TextView termStartTextView;
     TextView termEndTextView;
+    TextView termTitleTextView;
     Intent intent;
     int termId;
     FullDatabase db;
@@ -30,22 +33,25 @@ public class TermDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
+        db = FullDatabase.getInstance(getApplicationContext());
+        intent = getIntent();
+        setTitle("Term Details");
+        termId = intent.getIntExtra("termId", -1);
+        Log.d(TermDetailsActivity.LOG_TAG, "TermId passed In: " + termId);
+        Term selectedTerm = db.termDao().getTerm(termId);
+
+        //-------------Attach Views
         courseListView = findViewById(R.id.courseListView);
         termStartTextView = findViewById(R.id.termStartTextView);
         termEndTextView = findViewById(R.id.termEndTextView);
-        db = FullDatabase.getInstance(getApplicationContext());
-        Term selectedTerm = db.termDao().getTerm(termId);
-        TextView termTitleTextView = findViewById(R.id.termTitleTextView);
-        intent = getIntent();
-        //getActionBar().setTitle("Term Details");
-        setTitle("Term Details");
-        termId = intent.getIntExtra("termId", -1);
-        //System.out.println("Term Detail (with Courses) Received position: " + position);
-        //termTitleTextView.setText(selectedTerm.getTerm_name());
+        termTitleTextView = findViewById(R.id.termTitleTextView);
 
+        //-------------End Attach Views
 
+        //----- Update Views
         final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-        try {
+        if (selectedTerm != null) {
+            Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Not null");
             Date startDate = selectedTerm.getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
             Date endDate = selectedTerm.getTerm_end();
             //termStartTextView.setText(formatter.parse(currentDatTime.toString()).toString());
@@ -56,16 +62,17 @@ public class TermDetailsActivity extends AppCompatActivity {
             System.out.println("Formatted Date: " + temp);
             termStartTextView.setText(temp);
             termEndTextView.setText(tempEnd);
-
-        } catch (Exception e) {termStartTextView.setText("could not format");}
+            termTitleTextView.setText(selectedTerm.getTerm_name());
+        } else {
+            Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Null");
+        }
+        //----- End Update Views
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Course Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
-
-                //todo Send termId AND courseId over as addExtras.
                 int courseId = db.courseDao().getCourseList(termId).get(position).getCourse_id();
                 intent.putExtra("termId", termId);
                 intent.putExtra("courseId", courseId);
@@ -88,9 +95,10 @@ public class TermDetailsActivity extends AppCompatActivity {
                 tempCourse.setCourse_name("Course Added " + dbCount);
                 tempCourse.setCourse_start(Date.from(Instant.now()));
                 tempCourse.setCourse_end(Date.from(Instant.now()));
-                db.courseDao().addCourse(termId); //Crashes app on position=0
-                //db.courseDao().insertCourse(tempCourse); //Crashes App
-                //ArrayAdapter<String> tempAdapter = listView.
+                tempCourse.setCourse_status("Active Status");
+                tempCourse.setTerm_id_fk(termId);
+                //db.courseDao().addCourse(tempCourse);
+                db.courseDao().insertCourse(tempCourse);
                 updateCourseList();
 
             }
@@ -145,5 +153,11 @@ public class TermDetailsActivity extends AppCompatActivity {
         courseListView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCourseList();
     }
 }

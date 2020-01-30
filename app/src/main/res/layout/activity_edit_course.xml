@@ -7,7 +7,7 @@
     tools:context=".EditCourseActivity">
 
     <EditText
-        android:id="@+id/courseTitleEditText"
+        android:id="@+id/courseTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/courseStatusEditText"
+        android:id="@+id/courseStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -39,7 +39,7 @@
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseTitleEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/courseTitleTextView" />
 
     <EditText
         android:id="@+id/courseEndDate"

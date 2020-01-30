@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,9 +21,11 @@ import java.util.Date;
 import java.util.List;
 
 public class CourseDetailsActivity extends AppCompatActivity {
-    TextView courseTitle;
+    static final String LOG_TAG = "CourseDetAct";
+    TextView courseTitleTextView;
     TextView courseStartDate;
     TextView courseEndDate;
+    TextView courseStatusTextView;
     ListView taskListView;
     Button courseNotesButton;
     Button courseMentorsButton;
@@ -32,6 +34,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     int taskId;
     FullDatabase db;
     Intent intent;
+    Course selectedCourse;
     //List<Task> taskList;
 
     @Override
@@ -48,14 +51,26 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseId = intent.getIntExtra("courseId", -1);
         System.out.println("received courseId: " + courseId);
         final List<Task> taskList = db.taskDao().getTaskList(courseId);
-
+        selectedCourse = db.courseDao().getCourse(termId, courseId);
         courseNotesButton = findViewById(R.id.courseNotesButton);
         courseMentorsButton = findViewById(R.id.courseMentorsButton);
-        courseTitle = findViewById(R.id.courseTitleEditText);
+        courseTitleTextView = findViewById(R.id.courseTitleTextView);
+        courseStatusTextView = findViewById(R.id.courseStatusTextView);
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
         taskListView = findViewById(R.id.taskListView);
         //--------- END Instantiate Views and Setup Activity
+        //----------Update Views
+        if (selectedCourse != null) {
+            Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is Not null");
+            courseTitleTextView.setText(selectedCourse.getCourse_name());
+            courseStatusTextView.setText(selectedCourse.getCourse_status());
+
+        } else {Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is null");}
+
+        updateTaskList();
+        //----------End Update Views
+
         //--------- Task List View click function
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,19 +86,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         });
         //--------- End Task List View click function
 
-        Course selectedCourse = db.courseDao().getCourse(termId, courseId);
-        courseTitle.setText(selectedCourse.getCourse_name());
-        try {
-            System.out.println("Course Start: " + selectedCourse.getCourse_start());
-            System.out.println("Course End: " + selectedCourse.getCourse_end());
-            courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
-            courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
 
-        } catch (Exception e) {
-            courseStartDate.setText("Could Not Set");
-            courseEndDate.setText("Could Not Set");
-        }
-        updateTaskList();
+
         // -------------- FAB Add Stuff
         FloatingActionButton addTaskFAB = findViewById(R.id.addTaskFAB);
         addTaskFAB.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +123,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 System.out.println("editCourseFAB clicked");
                 Intent intent = new Intent(getApplicationContext(), EditCourseActivity.class);
-                //todo addExtras
+                intent.putExtra("termId", termId);
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
 
             }
@@ -131,7 +136,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MentorsListActivity.class);
-                //todo addExtras
+                intent.putExtra("termId", termId);
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }
         });
@@ -142,6 +148,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CourseNotesActivity.class);
                 //todo addExtras
+                intent.putExtra("termId", termId);
+                intent.putExtra("courseId", courseId);
                 startActivity(intent);
             }
         });
@@ -173,5 +181,12 @@ public class CourseDetailsActivity extends AppCompatActivity {
         taskListView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTaskList();
+
     }
 }
