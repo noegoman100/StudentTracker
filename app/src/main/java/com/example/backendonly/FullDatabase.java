@@ -14,7 +14,7 @@ import androidx.room.TypeConverters;
 public abstract class FullDatabase extends RoomDatabase {
 
 //    private static final String DB_NAME = Resources.getSystem().getString(R.string.database_name);
-    private static final String DB_NAME = "full_db24";
+    private static final String DB_NAME = "full_db25";
     private static FullDatabase instance;
 
     public static synchronized FullDatabase getInstance(Context context) {

@@ -15,6 +15,8 @@ import java.util.Date;
 public class EditTermActivity extends AppCompatActivity {
     Intent intent;
     int termId;
+    int courseId;
+    int taskId;
     FullDatabase db;
     Term tempTerm;
     SimpleDateFormat formatter;
