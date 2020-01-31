@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -15,6 +16,8 @@ public class EditTaskActivity extends AppCompatActivity {
     EditText taskTitleEditText;
     EditText taskDueDate;
     EditText taskInfoEditText;
+    EditText alertTitleEditText;
+    CheckBox setAlertCheckBox;
     FullDatabase db;
     Button saveTaskButton;
     Button deleteTaskButton;
@@ -36,6 +39,8 @@ public class EditTaskActivity extends AppCompatActivity {
         taskTitleEditText = findViewById(R.id.taskTitileEditText);
         taskDueDate = findViewById(R.id.taskDueDate);
         taskInfoEditText = findViewById(R.id.taskInfoEditText);
+        setAlertCheckBox = findViewById(R.id.setAlertCheckBox);
+        alertTitleEditText = findViewById(R.id.alertTitleEditText);
         //----End Attach Views to Fields
         //---- Update Views
         //todo update View items with queried Task, modify task object and update in Save click listener. Add Delete function
@@ -48,7 +53,7 @@ public class EditTaskActivity extends AppCompatActivity {
         try {
             selectedTask = db.taskDao().getTask(courseId,taskId);
             if(selectedTask != null) {
-                System.out.println("Not Null");
+                System.out.println("selectedTask Not Null");
                 System.out.println("EditTask termId: " + termId);
                 System.out.println("Edit Task courseId: " + courseId);
                 System.out.println("Edit Task taskId: " + taskId);
@@ -60,7 +65,8 @@ public class EditTaskActivity extends AppCompatActivity {
                 taskTypeEditText.setText(selectedTask.getTask_type());
                 taskTitleEditText.setText(selectedTask.getTask_name());
                 taskInfoEditText.setText(selectedTask.getTask_info());
-
+                setAlertCheckBox.setChecked((selectedTask.getTask_set_alert()==1)?true:false);
+                alertTitleEditText.setText(selectedTask.getTask_alert_name());
             } else {System.out.println("Null Object");}
         } catch (Exception e) {System.out.println("selectedTask failed");}
         //---- End Update Views
@@ -78,6 +84,16 @@ public class EditTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(EditTaskActivity.LOG_TAG, "Save Task Button Pressed");
+                //todo Finish Save Button
+                selectedTask.setTask_type(taskTypeEditText.getText().toString());
+                selectedTask.setTask_name(taskTitleEditText.getText().toString());
+                selectedTask.setTask_info(taskInfoEditText.getText().toString());
+                selectedTask.setTask_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
+                selectedTask.setTask_alert_name(alertTitleEditText.getText().toString());
+
+                db.taskDao().updateTask(selectedTask);
+
+                finish();
             }
         });
         //--------- End Save Task Button
