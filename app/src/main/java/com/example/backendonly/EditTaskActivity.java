@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class EditTaskActivity extends AppCompatActivity {
+    public static final String LOG_TAG = "EditTaskAct";
     EditText taskTypeEditText;
     EditText taskTitleEditText;
     EditText taskDueDate;
@@ -71,6 +73,14 @@ public class EditTaskActivity extends AppCompatActivity {
                 }
             });
         //------- End Delete Task Button
+        //--------- Save Task Button
+        saveTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(EditTaskActivity.LOG_TAG, "Save Task Button Pressed");
+            }
+        });
+        //--------- End Save Task Button
 
 
     }

@@ -28,6 +28,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     Intent intent;
     int termId;
     FullDatabase db;
+    Term selectedTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         setTitle("Term Details");
         termId = intent.getIntExtra("termId", -1);
         Log.d(TermDetailsActivity.LOG_TAG, "TermId passed In: " + termId);
-        Term selectedTerm = db.termDao().getTerm(termId);
+        selectedTerm = db.termDao().getTerm(termId);
 
         //-------------Attach Views
         courseListView = findViewById(R.id.courseListView);
@@ -48,25 +49,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         //-------------End Attach Views
 
-        //----- Update Views
-        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-        if (selectedTerm != null) {
-            Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Not null");
-            Date startDate = selectedTerm.getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
-            Date endDate = selectedTerm.getTerm_end();
-            //termStartTextView.setText(formatter.parse(currentDatTime.toString()).toString());
-            //String millisecondDate = currentDateTime.toString();
-            System.out.println("Millisecond Date: " + startDate.toString());
-            String temp = formatter.format(startDate);
-            String tempEnd = formatter.format(endDate);
-            System.out.println("Formatted Date: " + temp);
-            termStartTextView.setText(temp);
-            termEndTextView.setText(tempEnd);
-            termTitleTextView.setText(selectedTerm.getTerm_name());
-        } else {
-            Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Null");
-        }
-        //----- End Update Views
+        updateViews();
 
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -159,5 +142,31 @@ public class TermDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateCourseList();
+        selectedTerm = db.termDao().getTerm(termId);
+        updateViews();
+
+    }
+
+    private void updateViews() {
+        //----- Update Views
+        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        if (selectedTerm != null) {
+            Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Not null");
+            Date startDate = selectedTerm.getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
+            Date endDate = selectedTerm.getTerm_end();
+            //termStartTextView.setText(formatter.parse(currentDatTime.toString()).toString());
+            //String millisecondDate = currentDateTime.toString();
+            System.out.println("Millisecond Date: " + startDate.toString());
+            String temp = formatter.format(startDate);
+            String tempEnd = formatter.format(endDate);
+            System.out.println("Formatted Date: " + temp);
+            termStartTextView.setText(temp);
+            termEndTextView.setText(tempEnd);
+            termTitleTextView.setText(selectedTerm.getTerm_name());
+        } else {
+            Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Null");
+        }
+        //----- End Update Views
+
     }
 }

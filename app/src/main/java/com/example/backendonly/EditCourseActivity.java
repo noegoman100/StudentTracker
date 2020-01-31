@@ -50,8 +50,9 @@ public class EditCourseActivity extends AppCompatActivity {
         if (selectedCourse != null) {
             courseTitleEditText.setText(selectedCourse.getCourse_name());
             courseStatusEditText.setText(selectedCourse.getCourse_status());
-            courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
-            courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
+            //todo
+            //courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
+            //courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
         } else {System.out.println("selectedCourse is null");}
         //-------End Update Views
 

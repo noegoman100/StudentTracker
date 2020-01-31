@@ -77,7 +77,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Task clicked at position: " + position);
                 Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
-                taskId = taskList.get(position).getTask_id();
+                taskId = taskList.get(0).getTask_id(); //caused a crash?? //change me back to 'position' from 0
                 intent.putExtra("termId", termId);
                 intent.putExtra("courseId", courseId);
                 intent.putExtra("taskId", taskId);
