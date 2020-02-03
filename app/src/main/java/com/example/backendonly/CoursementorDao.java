@@ -11,8 +11,11 @@ import java.util.List;
 @Dao
 public interface CoursementorDao {
 
-    @Query("SELECT * FROM COURSEMENTOR_TABLE WHERE course_id_fk = :position ORDER BY course_id_fk")
-    List<Coursementor> getCoursementorList(int position);
+    @Query("SELECT * FROM COURSEMENTOR_TABLE WHERE course_id_fk = :courseId ORDER BY course_id_fk")
+    List<Coursementor> getCoursementorList(int courseId);
+
+    @Query("SELECT * FROM COURSEMENTOR_TABLE WHERE course_id_fk = :courseId AND coursementor_id = :coursementorId")
+    Coursementor getCoursementor(int courseId, int coursementorId);
 
     @Insert
     void insertCoursementor(Coursementor coursementor);

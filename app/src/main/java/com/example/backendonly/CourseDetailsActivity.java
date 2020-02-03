@@ -35,6 +35,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     FullDatabase db;
     Intent intent;
     Course selectedCourse;
+    List<Task> taskList;
     //List<Task> taskList;
 
     @Override
@@ -50,7 +51,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         System.out.println("received termId: " + termId);
         courseId = intent.getIntExtra("courseId", -1);
         System.out.println("received courseId: " + courseId);
-        final List<Task> taskList = db.taskDao().getTaskList(courseId);
+        //taskList = db.taskDao().getTaskList(courseId);
         selectedCourse = db.courseDao().getCourse(termId, courseId);
         courseNotesButton = findViewById(R.id.courseNotesButton);
         courseMentorsButton = findViewById(R.id.courseMentorsButton);
@@ -77,7 +78,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("Task clicked at position: " + position);
                 Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
-                taskId = taskList.get(0).getTask_id(); //caused a crash?? //change me back to 'position' from 0
+                taskId = taskList.get(position).getTask_id();
                 intent.putExtra("termId", termId);
                 intent.putExtra("courseId", courseId);
                 intent.putExtra("taskId", taskId);
@@ -160,19 +161,19 @@ public class CourseDetailsActivity extends AppCompatActivity {
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         //intent = getIntent();
         //int selectedTerm = intent.getIntExtra("", 0);
-        List<Task> allTasks = new ArrayList<>();
+        taskList = new ArrayList<>();
         try {
-            allTasks = db.taskDao().getTaskList(courseId);
-            System.out.println("Number of Rows in Course Query: " + allTasks.size());
+            taskList = db.taskDao().getTaskList(courseId);
+            System.out.println("Number of Rows in Course Query: " + taskList.size());
         } catch (Exception e) {System.out.println("could not pull query");}
 
 
 
 
-        String[] items = new String[allTasks.size()];
-        if(!allTasks.isEmpty()){
-            for (int i = 0; i < allTasks.size(); i++) {
-                items[i] = allTasks.get(i).getTask_name();
+        String[] items = new String[taskList.size()];
+        if(!taskList.isEmpty()){
+            for (int i = 0; i < taskList.size(); i++) {
+                items[i] = taskList.get(i).getTask_name();
                 System.out.println("Inside updateList Loop: " + i);
 
             }

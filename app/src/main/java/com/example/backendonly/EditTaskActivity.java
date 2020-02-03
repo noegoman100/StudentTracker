@@ -84,7 +84,6 @@ public class EditTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(EditTaskActivity.LOG_TAG, "Save Task Button Pressed");
-                //todo Finish Save Button
                 selectedTask.setTask_type(taskTypeEditText.getText().toString());
                 selectedTask.setTask_name(taskTitleEditText.getText().toString());
                 selectedTask.setTask_info(taskInfoEditText.getText().toString());
