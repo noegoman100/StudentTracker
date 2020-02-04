@@ -107,7 +107,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 tempTask.setCourse_id_fk(courseId);
                 try {
                     System.out.println("Inside Try - Add Task");
-                    //db.taskDao().addTask(courseId, "New Task");
                     db.taskDao().insertTask(tempTask);
 
                 } catch (Exception e) {System.out.println("Try inside addTaskFab failed");}
@@ -148,7 +147,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CourseNotesActivity.class);
-                //todo addExtras
                 intent.putExtra("termId", termId);
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
@@ -158,9 +156,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
     }
 
     private void updateTaskList() { //This updates the listView on this Course Details Activity
-        //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-        //intent = getIntent();
-        //int selectedTerm = intent.getIntExtra("", 0);
         taskList = new ArrayList<>();
         try {
             taskList = db.taskDao().getTaskList(courseId);
@@ -188,6 +183,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateTaskList();
+        //todo still needs updateViews()
 
     }
 }
