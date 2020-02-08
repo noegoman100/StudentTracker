@@ -46,6 +46,7 @@ public class CourseNotesActivity extends AppCompatActivity {
         saveNotesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //todo add AlarmManager / Pending Intent service.
                 selectedCourse.setCourse_notes(notesEditText.getText().toString());
                 db.courseDao().updateCourse(selectedCourse);
                 Log.d(LOG_TAG, "Save button clicked");
@@ -53,13 +54,19 @@ public class CourseNotesActivity extends AppCompatActivity {
             }
         });
         //-----------End Save Button
+
         //--------SMS send Button
-        //todo implement SMS button
         sendSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //todo test this button on a physical phone
                 Log.d(LOG_TAG, "sms Button clicked with number: " + smsPhoneEditText.getText().toString());
+                Intent clickIntent = new Intent(Intent.ACTION_VIEW);
+                clickIntent.putExtra("address", new String(smsPhoneEditText.getText().toString()));
+                clickIntent.putExtra("sms_body",notesEditText.getText().toString());
+                startActivity(Intent.createChooser(clickIntent, "Send sms via:"));
+
+                Log.d(LOG_TAG, "Completed SMS Button OnClickListener");
             }
         });
         Log.d(LOG_TAG, "SMS send button clicked");
