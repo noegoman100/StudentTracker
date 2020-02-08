@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class EditCourseActivity extends AppCompatActivity {
         System.out.println("Edit course activity received termId: " + termId);
         courseId = intent.getIntExtra("courseId", -1);
         System.out.println("Edit Course Activity received courseId: " + courseId);
-        selectedCourse = db.courseDao().getCourse(termId, courseId);
+
         //------------ Attach Views
         deleteCourseButton = findViewById(R.id.deleteCourseButton);
         saveCourseButton = findViewById(R.id.saveCourseButton);
@@ -46,15 +47,8 @@ public class EditCourseActivity extends AppCompatActivity {
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
         //------------ End Attach Views
-        //-------Update Views
-        if (selectedCourse != null) {
-            courseTitleEditText.setText(selectedCourse.getCourse_name());
-            courseStatusEditText.setText(selectedCourse.getCourse_status());
-            //todo
-            //courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
-            //courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
-        } else {System.out.println("selectedCourse is null");}
-        //-------End Update Views
+
+        updateViews();
 
         //----------- Delete Course Button
         deleteCourseButton.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +66,12 @@ public class EditCourseActivity extends AppCompatActivity {
                 //---Update selectedCourse with EditText data, then Update in Database
                 selectedCourse.setCourse_status(courseStatusEditText.getText().toString());
                 selectedCourse.setCourse_name(courseTitleEditText.getText().toString());
-                selectedCourse.setCourse_start(Date.from(Instant.now())); //todo get data from EditText
-                selectedCourse.setCourse_end(Date.from(Instant.now())); //todo get data from EditText
+                try {
+                    selectedCourse.setCourse_start(formatter.parse(courseStartDate.getText().toString()));
+                    selectedCourse.setCourse_end(formatter.parse(courseEndDate.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 db.courseDao().updateCourse(selectedCourse);
                 //---End Update
@@ -82,5 +80,17 @@ public class EditCourseActivity extends AppCompatActivity {
         });
         //-------- End Save Course Button
 
+    }
+
+    private void updateViews(){
+        //-------Update Views
+        selectedCourse = db.courseDao().getCourse(termId, courseId);
+        if (selectedCourse != null) {
+            courseTitleEditText.setText(selectedCourse.getCourse_name());
+            courseStatusEditText.setText(selectedCourse.getCourse_status());
+            courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
+            courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
+        } else {System.out.println("selectedCourse is null");}
+        //-------End Update Views
     }
 }

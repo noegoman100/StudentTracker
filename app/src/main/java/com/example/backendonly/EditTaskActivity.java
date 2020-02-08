@@ -2,6 +2,9 @@ package com.example.backendonly;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +13,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EditTaskActivity extends AppCompatActivity {
     public static final String LOG_TAG = "EditTaskAct";
     EditText taskTypeEditText;
@@ -17,6 +24,7 @@ public class EditTaskActivity extends AppCompatActivity {
     EditText taskDueDate;
     EditText taskInfoEditText;
     EditText alertTitleEditText;
+    EditText alertDateEditText;
     CheckBox setAlertCheckBox;
     FullDatabase db;
     Button saveTaskButton;
@@ -26,6 +34,7 @@ public class EditTaskActivity extends AppCompatActivity {
     int taskId;
     Intent intentReceived;
     Task selectedTask = new Task();
+    final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +50,11 @@ public class EditTaskActivity extends AppCompatActivity {
         taskInfoEditText = findViewById(R.id.taskInfoEditText);
         setAlertCheckBox = findViewById(R.id.setAlertCheckBox);
         alertTitleEditText = findViewById(R.id.alertTitleEditText);
+        alertDateEditText = findViewById(R.id.alertDate);
         //----End Attach Views to Fields
         //---- Update Views
-        //todo update View items with queried Task, modify task object and update in Save click listener. Add Delete function
+
+
         db = FullDatabase.getInstance(getApplicationContext());
 
         intentReceived = getIntent();
@@ -67,6 +78,8 @@ public class EditTaskActivity extends AppCompatActivity {
                 taskInfoEditText.setText(selectedTask.getTask_info());
                 setAlertCheckBox.setChecked((selectedTask.getTask_set_alert()==1)?true:false);
                 alertTitleEditText.setText(selectedTask.getTask_alert_name());
+                alertDateEditText.setText(formatter.format(selectedTask.getTask_alert_datetime()));
+                taskDueDate.setText(formatter.format(selectedTask.getTask_due()));
             } else {System.out.println("Null Object");}
         } catch (Exception e) {System.out.println("selectedTask failed");}
         //---- End Update Views
@@ -90,6 +103,16 @@ public class EditTaskActivity extends AppCompatActivity {
                 selectedTask.setTask_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
                 selectedTask.setTask_alert_name(alertTitleEditText.getText().toString());
 
+                try {
+                    selectedTask.setTask_alert_datetime(formatter.parse(alertDateEditText.getText().toString()));
+                    selectedTask.setTask_due(formatter.parse(taskDueDate.getText().toString()));
+                    Log.d(LOG_TAG, "updated alert date");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(setAlertCheckBox.isChecked()) {
+                    setAlarm(selectedTask.getTask_alert_datetime());
+                }
                 db.taskDao().updateTask(selectedTask);
 
                 finish();
@@ -97,6 +120,18 @@ public class EditTaskActivity extends AppCompatActivity {
         });
         //--------- End Save Task Button
 
+
+    }
+
+    private void setAlarm(Date date) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
+        intent.putExtra("termId", termId);
+        intent.putExtra("courseId", courseId);
+        intent.putExtra("taskId", taskId);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+        alarmManager.set(AlarmManager.RTC, date.getTime(), pendingIntent);
+        Log.d(LOG_TAG, "The alarm was set");
 
     }
 }

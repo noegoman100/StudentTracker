@@ -46,7 +46,6 @@ public class CourseNotesActivity extends AppCompatActivity {
         saveNotesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo add AlarmManager / Pending Intent service.
                 selectedCourse.setCourse_notes(notesEditText.getText().toString());
                 db.courseDao().updateCourse(selectedCourse);
                 Log.d(LOG_TAG, "Save button clicked");

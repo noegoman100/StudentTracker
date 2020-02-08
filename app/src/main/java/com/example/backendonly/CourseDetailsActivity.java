@@ -29,6 +29,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     ListView taskListView;
     Button courseNotesButton;
     Button courseMentorsButton;
+    SimpleDateFormat formatter;
     int termId;
     int courseId;
     int taskId;
@@ -44,7 +45,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_details);
         //--------- Instantiate Views and Setup Activity
         setTitle("Course Details Activity");
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         db = FullDatabase.getInstance(getApplicationContext());
         intent = getIntent();
         termId = intent.getIntExtra("termId", -1);
@@ -52,7 +53,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseId = intent.getIntExtra("courseId", -1);
         System.out.println("received courseId: " + courseId);
         //taskList = db.taskDao().getTaskList(courseId);
-        selectedCourse = db.courseDao().getCourse(termId, courseId);
+        //--------- END Instantiate Views and Setup Activity
+        // -------Attach Views
+
         courseNotesButton = findViewById(R.id.courseNotesButton);
         courseMentorsButton = findViewById(R.id.courseMentorsButton);
         courseTitleTextView = findViewById(R.id.courseTitleTextView);
@@ -60,17 +63,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
         taskListView = findViewById(R.id.taskListView);
-        //--------- END Instantiate Views and Setup Activity
-        //----------Update Views
-        if (selectedCourse != null) {
-            Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is Not null");
-            courseTitleTextView.setText(selectedCourse.getCourse_name());
-            courseStatusTextView.setText(selectedCourse.getCourse_status());
+        // -------End Attach Views
 
-        } else {Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is null");}
-
-        updateTaskList();
-        //----------End Update Views
+        updateViews();
 
         //--------- Task List View click function
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -183,7 +178,25 @@ public class CourseDetailsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateTaskList();
+        updateViews();
         //todo still needs updateViews()
 
+    }
+
+    private void updateViews(){
+
+        //----------Update Views
+        selectedCourse = db.courseDao().getCourse(termId, courseId);
+        if (selectedCourse != null) {
+            Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is Not null");
+            courseTitleTextView.setText(selectedCourse.getCourse_name());
+            courseStatusTextView.setText(selectedCourse.getCourse_status());
+            courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
+            courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
+
+        } else {Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is null");}
+
+        updateTaskList();
+        //----------End Update Views
     }
 }
