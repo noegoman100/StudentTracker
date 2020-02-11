@@ -10,8 +10,7 @@ import android.widget.EditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
+
 
 public class EditCourseActivity extends AppCompatActivity {
     Button deleteCourseButton;
@@ -25,7 +24,7 @@ public class EditCourseActivity extends AppCompatActivity {
     int courseId;
     Intent intent;
     Course selectedCourse;
-    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    SimpleDateFormat formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class EditCourseActivity extends AppCompatActivity {
         System.out.println("Edit course activity received termId: " + termId);
         courseId = intent.getIntExtra("courseId", -1);
         System.out.println("Edit Course Activity received courseId: " + courseId);
-
+        formatter = new SimpleDateFormat(getString(R.string.date_pattern));
         //------------ Attach Views
         deleteCourseButton = findViewById(R.id.deleteCourseButton);
         saveCourseButton = findViewById(R.id.saveCourseButton);

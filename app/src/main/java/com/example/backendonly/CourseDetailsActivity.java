@@ -45,7 +45,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_details);
         //--------- Instantiate Views and Setup Activity
         setTitle("Course Details Activity");
-        formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        formatter = new SimpleDateFormat(getString(R.string.date_pattern));
         db = FullDatabase.getInstance(getApplicationContext());
         intent = getIntent();
         termId = intent.getIntExtra("termId", -1);

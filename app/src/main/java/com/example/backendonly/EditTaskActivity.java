@@ -34,7 +34,7 @@ public class EditTaskActivity extends AppCompatActivity {
     int taskId;
     Intent intentReceived;
     Task selectedTask = new Task();
-    final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    final SimpleDateFormat formatter = new SimpleDateFormat(getString(R.string.date_pattern));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

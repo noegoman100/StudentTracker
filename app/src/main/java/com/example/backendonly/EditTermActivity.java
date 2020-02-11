@@ -29,8 +29,7 @@ public class EditTermActivity extends AppCompatActivity {
         setTitle("Edit Term for termId: " + termId);
         db = FullDatabase.getInstance(getApplicationContext());
         tempTerm = db.termDao().getTerm(termId);
-        formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-
+        formatter = new SimpleDateFormat(getString(R.string.date_pattern));
      // ------- Views
         final EditText termNameEditText = findViewById(R.id.termNameEditText);
         termNameEditText.setText(tempTerm.getTerm_name());

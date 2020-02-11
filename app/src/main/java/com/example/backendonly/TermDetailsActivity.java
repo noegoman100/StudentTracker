@@ -29,6 +29,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     int termId;
     FullDatabase db;
     Term selectedTerm;
+    SimpleDateFormat formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         termId = intent.getIntExtra("termId", -1);
         Log.d(TermDetailsActivity.LOG_TAG, "TermId passed In: " + termId);
         selectedTerm = db.termDao().getTerm(termId);
-
+        formatter = new SimpleDateFormat(getString(R.string.date_pattern));
         //-------------Attach Views
         courseListView = findViewById(R.id.courseListView);
         termStartTextView = findViewById(R.id.termStartTextView);
@@ -149,7 +150,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     private void updateViews() {
         //----- Update Views
-        final SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+
         if (selectedTerm != null) {
             Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Not null");
             Date startDate = selectedTerm.getTerm_start(); //returns milliseconds: 1579762062532 //.get(position -1) ??? Using correct index?
@@ -167,6 +168,54 @@ public class TermDetailsActivity extends AppCompatActivity {
             Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Null");
         }
         //----- End Update Views
+        //-----Update the Title + Percent Complete
+        String newTitle = "Term: " + selectedTerm.getTerm_name() + " - " + percentComplete() + " Done";
 
+        setTitle(newTitle);
+        //-----Update the Title + Percent Complete
+
+
+    }
+
+    private String percentComplete() {
+        //We need Start Date, End Date, and Today's Date
+        Long start = selectedTerm.getTerm_start().getTime();
+        Log.d(LOG_TAG, "start: " + start);
+        Long end = selectedTerm.getTerm_end().getTime();
+        Log.d(LOG_TAG, "end: " + end);
+        Long now = Date.from(Instant.now()).getTime();
+        Log.d(LOG_TAG, "now: " + now);
+        //(now)/(end-start)  *100 = Percent Complete.
+        Integer percentComplete;
+        double resultDouble = 0;
+        if (!(end-start==0)){
+            Long nowMinStart = now-start;
+            Long endMinStart = end-start;
+            Long divide = nowMinStart/endMinStart; //this doesn't work.
+            Long finalResult = divide * 100;
+            Log.d(LOG_TAG, "now-start: " + nowMinStart);
+            Log.d(LOG_TAG, "end-start: " + endMinStart);
+            Log.d(LOG_TAG, "divide: " + divide);
+            Log.d(LOG_TAG, "result: " + finalResult);
+
+            double nowMinS = nowMinStart.intValue();
+            double endMinS = endMinStart.intValue();
+            double divideDouble = (nowMinS/endMinS);
+            resultDouble = divideDouble * 100;
+            Log.d(LOG_TAG, "now-start double: " + nowMinS);
+            Log.d(LOG_TAG, "end-start double: " + endMinS);
+            Log.d(LOG_TAG, "divide double: " + divideDouble);
+            Log.d(LOG_TAG, "result double: " + resultDouble);
+
+
+
+
+            //percentComplete = String.format("%.2f", resultDouble);
+        } else {percentComplete = 1;}
+        //Log.d(LOG_TAG, "Percent Complete: " + percentComplete);
+        //todo implement me Oops, Divide by Zero
+
+
+        return String.format("%.2f", resultDouble) + "%";
     }
 }
