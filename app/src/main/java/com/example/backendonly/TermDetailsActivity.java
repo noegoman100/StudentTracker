@@ -51,7 +51,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         //-------------End Attach Views
 
         updateViews();
-
+        //------- List Click Listener
         courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -64,6 +64,8 @@ public class TermDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //------- End List Click Listener
+
         updateCourseList();
 
 // -------------- FAB Add Stuff
@@ -142,8 +144,9 @@ public class TermDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+//        selectedTerm = db.termDao().getTerm(termId);
+//        if (selectedTerm == null) {finish();}
         updateCourseList();
-        selectedTerm = db.termDao().getTerm(termId);
         updateViews();
 
     }
@@ -166,10 +169,11 @@ public class TermDetailsActivity extends AppCompatActivity {
             termTitleTextView.setText(selectedTerm.getTerm_name());
         } else {
             Log.d(TermDetailsActivity.LOG_TAG, "selected Term is Null");
+            selectedTerm = new Term();
         }
         //----- End Update Views
         //-----Update the Title + Percent Complete
-        String newTitle = "Term: " + selectedTerm.getTerm_name() + " - " + percentComplete() + " Done";
+        String newTitle = "Term: " + selectedTerm.getTerm_name() + " - " + percentComplete() + " Done"; //todo .getTerm_name is crashing app
 
         setTitle(newTitle);
         //-----Update the Title + Percent Complete
@@ -179,42 +183,25 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     private String percentComplete() {
         //We need Start Date, End Date, and Today's Date
+//        if (selectedTerm==null){
+//            Log.d(LOG_TAG, "selectedTerm is Null");
+//            finish();}
         Long start = selectedTerm.getTerm_start().getTime();
-        Log.d(LOG_TAG, "start: " + start);
         Long end = selectedTerm.getTerm_end().getTime();
-        Log.d(LOG_TAG, "end: " + end);
         Long now = Date.from(Instant.now()).getTime();
-        Log.d(LOG_TAG, "now: " + now);
-        //(now)/(end-start)  *100 = Percent Complete.
-        Integer percentComplete;
         double resultDouble = 0;
         if (!(end-start==0)){
             Long nowMinStart = now-start;
             Long endMinStart = end-start;
-            Long divide = nowMinStart/endMinStart; //this doesn't work.
-            Long finalResult = divide * 100;
-            Log.d(LOG_TAG, "now-start: " + nowMinStart);
-            Log.d(LOG_TAG, "end-start: " + endMinStart);
-            Log.d(LOG_TAG, "divide: " + divide);
-            Log.d(LOG_TAG, "result: " + finalResult);
-
             double nowMinS = nowMinStart.intValue();
             double endMinS = endMinStart.intValue();
             double divideDouble = (nowMinS/endMinS);
             resultDouble = divideDouble * 100;
-            Log.d(LOG_TAG, "now-start double: " + nowMinS);
-            Log.d(LOG_TAG, "end-start double: " + endMinS);
-            Log.d(LOG_TAG, "divide double: " + divideDouble);
-            Log.d(LOG_TAG, "result double: " + resultDouble);
-
-
-
-
-            //percentComplete = String.format("%.2f", resultDouble);
-        } else {percentComplete = 1;}
-        //Log.d(LOG_TAG, "Percent Complete: " + percentComplete);
-        //todo implement me Oops, Divide by Zero
-
+//            Log.d(LOG_TAG, "now-start double: " + nowMinS);
+//            Log.d(LOG_TAG, "end-start double: " + endMinS);
+//            Log.d(LOG_TAG, "divide double: " + divideDouble);
+//            Log.d(LOG_TAG, "result double: " + resultDouble);
+        } else {resultDouble = 1;}
 
         return String.format("%.2f", resultDouble) + "%";
     }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +19,7 @@ public class EditTermActivity extends AppCompatActivity {
     int courseId;
     int taskId;
     FullDatabase db;
-    Term tempTerm;
+    Term selectedTerm;
     SimpleDateFormat formatter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,11 @@ public class EditTermActivity extends AppCompatActivity {
         termId = intent.getIntExtra("termId", -1);
         setTitle("Edit Term for termId: " + termId);
         db = FullDatabase.getInstance(getApplicationContext());
-        tempTerm = db.termDao().getTerm(termId);
+        selectedTerm = db.termDao().getTerm(termId);
         formatter = new SimpleDateFormat(getString(R.string.date_pattern));
      // ------- Views
         final EditText termNameEditText = findViewById(R.id.termNameEditText);
-        termNameEditText.setText(tempTerm.getTerm_name());
+        termNameEditText.setText(selectedTerm.getTerm_name());
         final EditText termStartDate = findViewById(R.id.termStartDate);
         final EditText termEndDate = findViewById(R.id.termEndDate);
         Date startDate = db.termDao().getTerm(termId).getTerm_start();
@@ -47,15 +48,15 @@ public class EditTermActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tempTerm.setTerm_name(termNameEditText.getText().toString());
+                selectedTerm.setTerm_name(termNameEditText.getText().toString());
                 try {
                     Date tempDate = formatter.parse(termStartDate.getText().toString());
-                    tempTerm.setTerm_start(tempDate);
+                    selectedTerm.setTerm_start(tempDate);
                     Date tempDateEnd = formatter.parse(termEndDate.getText().toString());
-                    tempTerm.setTerm_end(tempDateEnd);
+                    selectedTerm.setTerm_end(tempDateEnd);
                 } catch (Exception e) {System.out.println("update term dates failed.");}
 
-                db.termDao().updateTerm(tempTerm);
+                db.termDao().updateTerm(selectedTerm);
                 finish();
             }
         });
@@ -63,8 +64,14 @@ public class EditTermActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.termDao().deleteTerm(tempTerm);
-                finish();
+                if (!db.courseDao().getCourseList(termId).isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Courses Still Present",Toast.LENGTH_SHORT).show();
+                    //todo send out a toast
+                } else {
+                    db.termDao().deleteTerm(selectedTerm);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

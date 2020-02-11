@@ -44,7 +44,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
         //--------- Instantiate Views and Setup Activity
-        setTitle("Course Details Activity");
+
         formatter = new SimpleDateFormat(getString(R.string.date_pattern));
         db = FullDatabase.getInstance(getApplicationContext());
         intent = getIntent();
@@ -177,9 +177,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+//        selectedCourse = db.courseDao().getCourse(termId, courseId);
+//        if (selectedCourse == null) {finish();}
         updateTaskList();
         updateViews();
-        //todo still needs updateViews()
 
     }
 
@@ -187,6 +188,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         //----------Update Views
         selectedCourse = db.courseDao().getCourse(termId, courseId);
+        setTitle(selectedCourse.getCourse_name() + " " + percentComplete() + " Done");
+
         if (selectedCourse != null) {
             Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is Not null");
             courseTitleTextView.setText(selectedCourse.getCourse_name());
@@ -194,9 +197,34 @@ public class CourseDetailsActivity extends AppCompatActivity {
             courseStartDate.setText(formatter.format(selectedCourse.getCourse_start()));
             courseEndDate.setText(formatter.format(selectedCourse.getCourse_end()));
 
-        } else {Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is null");}
+        } else {
+            Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is null");
+            selectedCourse = new Course();
+        }
 
         updateTaskList();
         //----------End Update Views
+    }
+    private String percentComplete() {
+        //We need Start Date, End Date, and Today's Date
+        //if (selectedCourse==null){selectedCourse = new Course();}
+        Long start = selectedCourse.getCourse_start().getTime();
+        Long end = selectedCourse.getCourse_end().getTime();
+        Long now = Date.from(Instant.now()).getTime();
+        double resultDouble = 0;
+        if (!(end-start==0)){
+            Long nowMinStart = now-start;
+            Long endMinStart = end-start;
+            double nowMinS = nowMinStart.intValue();
+            double endMinS = endMinStart.intValue();
+            double divideDouble = (nowMinS/endMinS);
+            resultDouble = divideDouble * 100;
+//            Log.d(LOG_TAG, "now-start double: " + nowMinS);
+//            Log.d(LOG_TAG, "end-start double: " + endMinS);
+//            Log.d(LOG_TAG, "divide double: " + divideDouble);
+//            Log.d(LOG_TAG, "result double: " + resultDouble);
+        } else {resultDouble = 1;}
+
+        return String.format("%.2f", resultDouble) + "%";
     }
 }

@@ -54,7 +54,10 @@ public class EditCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 db.courseDao().deleteCourse(selectedCourse);
-                finish();
+                //finish();
+                Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
+                intent.putExtra("termId", selectedCourse.getTerm_id_fk());
+                startActivity(intent);
             }
         });
         //----------- End Delete Course Button
