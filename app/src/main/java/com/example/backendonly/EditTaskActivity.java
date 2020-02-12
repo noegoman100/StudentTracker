@@ -12,9 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -24,7 +26,8 @@ public class EditTaskActivity extends AppCompatActivity {
     EditText taskDueDate;
     EditText taskInfoEditText;
     EditText alertTitleEditText;
-    EditText alertDateEditText;
+    EditText alertStartDateEditText;
+    //EditText alertEndDateEditText;
     CheckBox setAlertCheckBox;
     FullDatabase db;
     Button saveTaskButton;
@@ -34,13 +37,14 @@ public class EditTaskActivity extends AppCompatActivity {
     int taskId;
     Intent intentReceived;
     Task selectedTask = new Task();
-    final SimpleDateFormat formatter = new SimpleDateFormat(getString(R.string.date_pattern));
+    SimpleDateFormat formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
         setTitle("Edit Task");
+        formatter = new SimpleDateFormat(getString(R.string.date_pattern));
         //----Attach Views to Fields
         taskTypeEditText = findViewById(R.id.taskTypeEditText);
         saveTaskButton = findViewById(R.id.saveTaskButton);
@@ -50,7 +54,8 @@ public class EditTaskActivity extends AppCompatActivity {
         taskInfoEditText = findViewById(R.id.taskInfoEditText);
         setAlertCheckBox = findViewById(R.id.setAlertCheckBox);
         alertTitleEditText = findViewById(R.id.alertTitleEditText);
-        alertDateEditText = findViewById(R.id.alertDate);
+        alertStartDateEditText = findViewById(R.id.alertStartDate);
+        //alertEndDateEditText = findViewById(R.id.alertEndDate);
         //----End Attach Views to Fields
         //---- Update Views
 
@@ -78,7 +83,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 taskInfoEditText.setText(selectedTask.getTask_info());
                 setAlertCheckBox.setChecked((selectedTask.getTask_set_alert()==1)?true:false);
                 alertTitleEditText.setText(selectedTask.getTask_alert_name());
-                alertDateEditText.setText(formatter.format(selectedTask.getTask_alert_datetime()));
+                alertStartDateEditText.setText(formatter.format(selectedTask.getTask_alert_datetime()));
                 taskDueDate.setText(formatter.format(selectedTask.getTask_due()));
             } else {System.out.println("Null Object");}
         } catch (Exception e) {System.out.println("selectedTask failed");}
@@ -104,15 +109,17 @@ public class EditTaskActivity extends AppCompatActivity {
                 selectedTask.setTask_alert_name(alertTitleEditText.getText().toString());
 
                 try {
-                    selectedTask.setTask_alert_datetime(formatter.parse(alertDateEditText.getText().toString()));
+                    selectedTask.setTask_alert_datetime(formatter.parse(alertStartDateEditText.getText().toString()));
                     selectedTask.setTask_due(formatter.parse(taskDueDate.getText().toString()));
                     Log.d(LOG_TAG, "updated alert date");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                //---------------Set the Alarm(s)
                 if(setAlertCheckBox.isChecked()) {
                     setAlarm(selectedTask.getTask_alert_datetime());
                 }
+                //---------------End Set the Alarm(s)
                 db.taskDao().updateTask(selectedTask);
 
                 finish();
@@ -123,15 +130,19 @@ public class EditTaskActivity extends AppCompatActivity {
 
     }
 
-    private void setAlarm(Date date) {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
-        intent.putExtra("termId", termId);
-        intent.putExtra("courseId", courseId);
-        intent.putExtra("taskId", taskId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-        alarmManager.set(AlarmManager.RTC, date.getTime(), pendingIntent);
-        Log.d(LOG_TAG, "The alarm was set");
-
+    private void setAlarm(Date dateProvided) {
+        //todo Validate date.
+        if (dateProvided.compareTo(Date.from(Instant.now())) > 0) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
+            intent.putExtra("termId", termId);
+            intent.putExtra("courseId", courseId);
+            intent.putExtra("taskId", taskId);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
+            Log.d(LOG_TAG, "The alarm was set");
+        } else {
+            Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
+        }
     }
 }

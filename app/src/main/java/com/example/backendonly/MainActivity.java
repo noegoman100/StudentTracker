@@ -34,9 +34,13 @@ public class MainActivity extends AppCompatActivity {
         //getActionBar().setTitle("Term List"); //Crashes App
         setTitle("Term List");
         listView = findViewById(R.id.listView);
+        //----Change BG Color
+        View root = listView.getRootView();
+        root.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+        //----End Change BG Color
         //listItem = getResources().getStringArray(R.array.array_technology);
         db = FullDatabase.getInstance(getApplicationContext());
-        Context tempContext = getApplicationContext();
+        //Context tempContext = getApplicationContext();
 
 
 // -------------- ListView Stuff
