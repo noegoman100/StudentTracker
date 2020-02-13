@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="nukeDBButton" type="id" />
+    <item name="populateDBButton" type="id" />
+
+</resources>

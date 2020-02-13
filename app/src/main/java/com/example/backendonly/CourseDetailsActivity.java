@@ -98,7 +98,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 tempTask.setTask_info("Task info here");
                 tempTask.setTask_alert_name("Temp Task Name");
                 tempTask.setTask_alert_datetime(Date.from(Instant.now()));
-                tempTask.setTask_set_alert(0);
+                //tempTask.setTask_set_alert(0);
                 tempTask.setCourse_id_fk(courseId);
                 try {
                     System.out.println("Inside Try - Add Task");

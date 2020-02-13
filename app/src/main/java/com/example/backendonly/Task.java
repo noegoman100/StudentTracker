@@ -32,8 +32,8 @@ public class Task {
     private Date task_due;
     @ColumnInfo(name = "task_info")
     private String task_info;
-    @ColumnInfo(name = "task_set_alert")
-    private int task_set_alert;
+//    @ColumnInfo(name = "task_set_alert")
+//    private int task_set_alert;
     @ColumnInfo(name = "task_alert_name")
     private String task_alert_name;
     @ColumnInfo(name = "task_alert_datetime")
@@ -87,13 +87,13 @@ public class Task {
         this.task_info = task_info;
     }
 
-    public int getTask_set_alert() {
-        return task_set_alert;
-    }
-
-    public void setTask_set_alert(int task_set_alert) {
-        this.task_set_alert = task_set_alert;
-    }
+//    public int getTask_set_alert() {
+//        return task_set_alert;
+//    }
+//
+//    public void setTask_set_alert(int task_set_alert) {
+//        this.task_set_alert = task_set_alert;
+//    }
 
     public String getTask_alert_name() {
         return task_alert_name;

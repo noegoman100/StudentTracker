@@ -81,7 +81,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 taskTypeEditText.setText(selectedTask.getTask_type());
                 taskTitleEditText.setText(selectedTask.getTask_name());
                 taskInfoEditText.setText(selectedTask.getTask_info());
-                setAlertCheckBox.setChecked((selectedTask.getTask_set_alert()==1)?true:false);
+                //setAlertCheckBox.setChecked((selectedTask.getTask_set_alert()==1)?true:false);
                 alertTitleEditText.setText(selectedTask.getTask_alert_name());
                 alertStartDateEditText.setText(formatter.format(selectedTask.getTask_alert_datetime()));
                 taskDueDate.setText(formatter.format(selectedTask.getTask_due()));
@@ -105,7 +105,7 @@ public class EditTaskActivity extends AppCompatActivity {
                 selectedTask.setTask_type(taskTypeEditText.getText().toString());
                 selectedTask.setTask_name(taskTitleEditText.getText().toString());
                 selectedTask.setTask_info(taskInfoEditText.getText().toString());
-                selectedTask.setTask_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
+                //selectedTask.setTask_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
                 selectedTask.setTask_alert_name(alertTitleEditText.getText().toString());
 
                 try {
@@ -131,7 +131,6 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     private void setAlarm(Date dateProvided) {
-        //todo Validate date.
         if (dateProvided.compareTo(Date.from(Instant.now())) > 0) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
