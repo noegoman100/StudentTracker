@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -131,7 +132,7 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     private void setAlarm(Date dateProvided) {
-        if (dateProvided.compareTo(Date.from(Instant.now())) > 0) {
+        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
             intent.putExtra("termId", termId);

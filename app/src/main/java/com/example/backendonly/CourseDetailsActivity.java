@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,10 +95,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 Task tempTask = new Task();
                 tempTask.setTask_name("Task Added ");
                 tempTask.setTask_type("Performance");
-                tempTask.setTask_due(Date.from(Instant.now()));
+                tempTask.setTask_due(Calendar.getInstance().getTime());
                 tempTask.setTask_info("Task info here");
                 tempTask.setTask_alert_name("Temp Task Name");
-                tempTask.setTask_alert_datetime(Date.from(Instant.now()));
+                tempTask.setTask_alert_datetime(Calendar.getInstance().getTime());
                 //tempTask.setTask_set_alert(0);
                 tempTask.setCourse_id_fk(courseId);
                 try {
@@ -210,7 +211,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         //if (selectedCourse==null){selectedCourse = new Course();}
         Long start = selectedCourse.getCourse_start().getTime();
         Long end = selectedCourse.getCourse_end().getTime();
-        Long now = Date.from(Instant.now()).getTime();
+        Long now = Calendar.getInstance().getTime().getTime();
         double resultDouble = 0;
         if (!(end-start==0)){
             Long nowMinStart = now-start;

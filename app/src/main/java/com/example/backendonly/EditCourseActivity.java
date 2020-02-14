@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -115,7 +116,7 @@ public class EditCourseActivity extends AppCompatActivity {
     }
 
     private void setAlarm(Date dateProvided, String name) {
-        if (dateProvided.compareTo(Date.from(Instant.now())) > 0) {
+        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
             intent.putExtra("termId", termId);

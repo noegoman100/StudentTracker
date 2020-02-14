@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.time.Instant;
 import java.util.List;
@@ -73,18 +74,18 @@ public class MainActivity extends AppCompatActivity {
         addTermFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("addTermFAB clicked");
-
-                //db = FullDatabase.getInstance(getApplicationContext());
-                //int dbCount = db.termDao().getTermList().size() + 1;
+                Calendar calendar = Calendar.getInstance();
                 Term tempTerm1 = new Term();
                 tempTerm1.setTerm_name("Term Added");
-                tempTerm1.setTerm_start(Date.from(Instant.now()));
-                tempTerm1.setTerm_end(Date.from(Instant.now()));
+                //todo replace these with API level 24 stuff
+                tempTerm1.setTerm_start(calendar.getTime());
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+                tempTerm1.setTerm_end(calendar.getTime());
+
                 db.termDao().insertTerm(tempTerm1);
                 //ArrayAdapter<String> tempAdapter = listView.
                 updateList();
-
+                System.out.println("addTermFAB clicked");
             }
         });
 

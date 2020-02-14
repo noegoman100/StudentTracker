@@ -15,6 +15,7 @@
         <item>Perl</item>
     </string-array>
     <string name="title_activity_term_detail">TermDetail</string>
-    <string name="database_name">full_db9</string>
+    <string name="database_name">full_db26</string>
     <string name="date_pattern">MM/dd/yyyy HH:mm</string>
+
 </resources>

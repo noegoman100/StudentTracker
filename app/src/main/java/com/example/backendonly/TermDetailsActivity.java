@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -73,20 +74,19 @@ public class TermDetailsActivity extends AppCompatActivity {
         addCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("addCourseFAB clicked");
-//
-
+                Calendar calendar = Calendar.getInstance();
                 int dbCount = db.courseDao().getCourseList(termId).size() + 1;
                 Course tempCourse = new Course();
                 tempCourse.setCourse_name("Course Added " + dbCount);
-                tempCourse.setCourse_start(Date.from(Instant.now()));
-                tempCourse.setCourse_end(Date.from(Instant.now()));
+                tempCourse.setCourse_start(calendar.getTime());
+                calendar.add(Calendar.DAY_OF_YEAR, 1);
+                tempCourse.setCourse_end(calendar.getTime());
                 tempCourse.setCourse_status("Active Status");
                 tempCourse.setTerm_id_fk(termId);
                 //db.courseDao().addCourse(tempCourse);
                 db.courseDao().insertCourse(tempCourse);
                 updateCourseList();
-
+                System.out.println("addCourseFAB clicked");
             }
         });
 
@@ -183,12 +183,10 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     private String percentComplete() {
         //We need Start Date, End Date, and Today's Date
-//        if (selectedTerm==null){
-//            Log.d(LOG_TAG, "selectedTerm is Null");
-//            finish();}
+        Calendar calendar = Calendar.getInstance();
         Long start = selectedTerm.getTerm_start().getTime();
         Long end = selectedTerm.getTerm_end().getTime();
-        Long now = Date.from(Instant.now()).getTime();
+        Long now = calendar.getTime().getTime();
         double resultDouble = 0;
         if (!(end-start==0)){
             Long nowMinStart = now-start;

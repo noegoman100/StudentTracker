@@ -13,13 +13,14 @@ import androidx.room.TypeConverters;
 @TypeConverters({Converters.class})
 public abstract class FullDatabase extends RoomDatabase {
 
-//    private static final String DB_NAME = Resources.getSystem().getString(R.string.database_name);
+    //private static final String DB_NAME = Resources.getSystem().getString(R.string.database_name);
     private static final String DB_NAME = "full_db26";
     private static FullDatabase instance;
 
     public static synchronized FullDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), FullDatabase.class, DB_NAME).allowMainThreadQueries().build();
+            //instance = Room.databaseBuilder(context.getApplicationContext(), FullDatabase.class, DB_NAME).build(); //todo run DB on another thread.
 
         }
         return instance;
