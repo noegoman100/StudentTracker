@@ -144,8 +144,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        selectedTerm = db.termDao().getTerm(termId);
-//        if (selectedTerm == null) {finish();}
+        selectedTerm = db.termDao().getTerm(termId);
         updateCourseList();
         updateViews();
 

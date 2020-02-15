@@ -3,11 +3,15 @@ package com.example.backendonly;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CourseNotesActivity extends AppCompatActivity {
     public static final String LOG_TAG = "CourseNotesAct";
@@ -60,10 +64,24 @@ public class CourseNotesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //todo test this button on a physical phone
                 Log.d(LOG_TAG, "sms Button clicked with number: " + smsPhoneEditText.getText().toString());
-                Intent clickIntent = new Intent(Intent.ACTION_VIEW);
-                clickIntent.putExtra("address", new String(smsPhoneEditText.getText().toString()));
-                clickIntent.putExtra("sms_body",notesEditText.getText().toString());
-                startActivity(Intent.createChooser(clickIntent, "Send sms via:"));
+//                Intent clickIntent = new Intent(Intent.ACTION_VIEW);
+//                clickIntent.putExtra("address", new String(smsPhoneEditText.getText().toString()));
+//                clickIntent.putExtra("sms_body",notesEditText.getText().toString());
+//                startActivity(Intent.createChooser(clickIntent, "Send sms via:"));
+
+
+//                Intent clickIntent = new Intent(Intent.ACTION_VIEW);
+//                clickIntent.putExtra("sms_body", "default content");
+//                clickIntent.setType("vnd.android-dir/mms-sms");
+//                startActivity(clickIntent);
+
+//                String message = notesEditText.getText().toString();
+//                String phoneNo = smsPhoneEditText.getText().toString();
+//                SmsManager smsManager = SmsManager.getDefault();
+//                smsManager.sendTextMessage(phoneNo, null, message, null, null);
+
+                sendSmsBySIntent(smsPhoneEditText.getText().toString(), notesEditText.getText().toString());
+
 
                 Log.d(LOG_TAG, "Completed SMS Button OnClickListener");
             }
@@ -76,4 +94,21 @@ public class CourseNotesActivity extends AppCompatActivity {
         notesEditText.setText(selectedCourse.getCourse_notes());
 
     }
+
+    public void sendSmsBySIntent(String phoneNumber, String smsBody) {
+        // add the phone number in the data
+        Uri uri = Uri.parse("smsto:" + phoneNumber);
+
+        Intent smsSIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        // add the message at the sms_body extra field
+        smsSIntent.putExtra("sms_body", smsBody);
+        try{
+            startActivity(smsSIntent);
+        } catch (Exception ex) {
+            //Toast.makeText(CourseDetailsActivity.this, "Your sms has failed...", Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
+    }
+
+
 }
