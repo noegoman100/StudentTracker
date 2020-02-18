@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BackEndOnly</string>
+    <string name="app_name">StudentTracker</string>
     <string-array name="array_technology">
         <item>Android</item>
         <item>Java</item>
