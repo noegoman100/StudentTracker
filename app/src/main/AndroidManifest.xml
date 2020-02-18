@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.backendonly">
+    package="com.sawyer.StudentTracker">
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <application
         android:allowBackup="true"
@@ -9,15 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditCoursementorActivity"></activity>
-        <activity android:name=".MentorsListActivity" />
-        <activity android:name=".CourseNotesActivity" />
-        <activity android:name=".EditTaskActivity" />
-        <activity android:name=".EditCourseActivity" />
-        <activity android:name=".CourseDetailsActivity" />
-        <activity android:name=".EditTermActivity" />
-        <activity android:name=".TermDetailsActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.sawyer.StudentTracker.EditCoursementorActivity"></activity>
+        <activity android:name="com.sawyer.StudentTracker.MentorsListActivity" />
+        <activity android:name="com.sawyer.StudentTracker.CourseNotesActivity" />
+        <activity android:name="com.sawyer.StudentTracker.EditTaskActivity" />
+        <activity android:name="com.sawyer.StudentTracker.EditCourseActivity" />
+        <activity android:name="com.sawyer.StudentTracker.CourseDetailsActivity" />
+        <activity android:name="com.sawyer.StudentTracker.EditTermActivity" />
+        <activity android:name="com.sawyer.StudentTracker.TermDetailsActivity" />
+        <activity android:name="com.sawyer.StudentTracker.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
