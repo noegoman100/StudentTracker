@@ -120,7 +120,7 @@ public class EditCourseActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
             intent.putExtra("termId", termId);
             intent.putExtra("courseId", courseId);
-            //intent.putExtra("taskId", taskId);
+            //intent.putExtra("assessmentId", assessmentId);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
             alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
             Log.d(LOG_TAG, "The alarm was set");

@@ -25,18 +25,18 @@ public class CourseDetailsActivity extends AppCompatActivity {
     TextView courseStartDate;
     TextView courseEndDate;
     TextView courseStatusTextView;
-    ListView taskListView;
+    ListView assessmentListView;
     Button courseNotesButton;
     Button courseMentorsButton;
     SimpleDateFormat formatter;
     int termId;
     int courseId;
-    int taskId;
+    int assessmentId;
     FullDatabase db;
     Intent intent;
     Course selectedCourse;
-    List<Task> taskList;
-    //List<Task> taskList;
+    List<Assessment> assessmentList;
+    //List<Assessment> assessmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         System.out.println("received termId: " + termId);
         courseId = intent.getIntExtra("courseId", -1);
         System.out.println("received courseId: " + courseId);
-        //taskList = db.taskDao().getTaskList(courseId);
+        //assessmentList = db.assessmentDao().getAssessmentList(courseId);
         //--------- END Instantiate Views and Setup Activity
         // -------Attach Views
 
@@ -61,51 +61,51 @@ public class CourseDetailsActivity extends AppCompatActivity {
         courseStatusTextView = findViewById(R.id.courseStatusTextView);
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
-        taskListView = findViewById(R.id.taskListView);
+        assessmentListView = findViewById(R.id.assessmentListView);
         // -------End Attach Views
 
         updateViews();
 
-        //--------- Task List View click function
-        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //--------- Assessment List View click function
+        assessmentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Task clicked at position: " + position);
-                Intent intent = new Intent(getApplicationContext(), EditTaskActivity.class);
-                taskId = taskList.get(position).getTask_id();
+                System.out.println("Assessment clicked at position: " + position);
+                Intent intent = new Intent(getApplicationContext(), EditAssessmentActivity.class);
+                assessmentId = assessmentList.get(position).getAssessment_id();
                 intent.putExtra("termId", termId);
                 intent.putExtra("courseId", courseId);
-                intent.putExtra("taskId", taskId);
+                intent.putExtra("assessmentId", assessmentId);
                 startActivity(intent);
             }
         });
-        //--------- End Task List View click function
+        //--------- End Assessment List View click function
 
 
 
         // -------------- FAB Add Stuff
-        FloatingActionButton addTaskFAB = findViewById(R.id.addTaskFAB);
-        addTaskFAB.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addAssessmentFAB = findViewById(R.id.addAssessmentFAB);
+        addAssessmentFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("addTaskFAB clicked");
-                //int dbCount = db.taskDao().getTaskList(courseId).size() + 1;
-                Task tempTask = new Task();
-                tempTask.setTask_name("Task Added ");
-                tempTask.setTask_type("Performance");
-                tempTask.setTask_due(Calendar.getInstance().getTime());
-                tempTask.setTask_info("Task info here");
-                tempTask.setTask_alert_name("Temp Task Name");
-                tempTask.setTask_alert_datetime(Calendar.getInstance().getTime());
-                //tempTask.setTask_set_alert(0);
-                tempTask.setCourse_id_fk(courseId);
+                System.out.println("addAssessmentFAB clicked");
+                //int dbCount = db.assessmentDao().getAssessmentList(courseId).size() + 1;
+                Assessment tempAssessment = new Assessment();
+                tempAssessment.setAssessment_name("Assessment Added ");
+                tempAssessment.setAssessment_type("Performance");
+                tempAssessment.setAssessment_due(Calendar.getInstance().getTime());
+                tempAssessment.setAssessment_info("Assessment info here");
+                tempAssessment.setAssessment_alert_name("Temp Assessment Name");
+                tempAssessment.setAssessment_alert_datetime(Calendar.getInstance().getTime());
+                //tempAssessment.setAssessment_set_alert(0);
+                tempAssessment.setCourse_id_fk(courseId);
                 try {
-                    System.out.println("Inside Try - Add Task");
-                    db.taskDao().insertTask(tempTask);
+                    System.out.println("Inside Try - Add Assessment");
+                    db.assessmentDao().insertAssessment(tempAssessment);
 
-                } catch (Exception e) {System.out.println("Try inside addTaskFab failed");}
+                } catch (Exception e) {System.out.println("Try inside addAssessmentFab failed");}
 
-                updateTaskList();
+                updateAssessmentList();
             }
         });
 
@@ -149,26 +149,26 @@ public class CourseDetailsActivity extends AppCompatActivity {
         //------- End Course Notes Button
     }
 
-    private void updateTaskList() { //This updates the listView on this Course Details Activity
-        taskList = new ArrayList<>();
+    private void updateAssessmentList() { //This updates the listView on this Course Details Activity
+        assessmentList = new ArrayList<>();
         try {
-            taskList = db.taskDao().getTaskList(courseId);
-            System.out.println("Number of Rows in Course Query: " + taskList.size());
+            assessmentList = db.assessmentDao().getAssessmentList(courseId);
+            System.out.println("Number of Rows in Course Query: " + assessmentList.size());
         } catch (Exception e) {System.out.println("could not pull query");}
 
 
 
 
-        String[] items = new String[taskList.size()];
-        if(!taskList.isEmpty()){
-            for (int i = 0; i < taskList.size(); i++) {
-                items[i] = taskList.get(i).getTask_name();
+        String[] items = new String[assessmentList.size()];
+        if(!assessmentList.isEmpty()){
+            for (int i = 0; i < assessmentList.size(); i++) {
+                items[i] = assessmentList.get(i).getAssessment_name();
                 System.out.println("Inside updateList Loop: " + i);
 
             }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
-        taskListView.setAdapter(adapter);
+        assessmentListView.setAdapter(adapter);
 
         adapter.notifyDataSetChanged();
     }
@@ -178,7 +178,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         super.onResume();
 //        selectedCourse = db.courseDao().getCourse(termId, courseId);
 //        if (selectedCourse == null) {finish();}
-        updateTaskList();
+        updateAssessmentList();
         updateViews();
 
     }
@@ -201,7 +201,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             selectedCourse = new Course();
         }
 
-        updateTaskList();
+        updateAssessmentList();
         //----------End Update Views
     }
     private String percentComplete() {

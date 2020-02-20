@@ -12,7 +12,7 @@
         <activity android:name="com.sawyer.StudentTracker.EditCoursementorActivity"></activity>
         <activity android:name="com.sawyer.StudentTracker.MentorsListActivity" />
         <activity android:name="com.sawyer.StudentTracker.CourseNotesActivity" />
-        <activity android:name="com.sawyer.StudentTracker.EditTaskActivity" />
+        <activity android:name="com.sawyer.StudentTracker.EditAssessmentActivity" />
         <activity android:name="com.sawyer.StudentTracker.EditCourseActivity" />
         <activity android:name="com.sawyer.StudentTracker.CourseDetailsActivity" />
         <activity android:name="com.sawyer.StudentTracker.EditTermActivity" />

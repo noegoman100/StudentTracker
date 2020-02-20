@@ -16,7 +16,7 @@ public class EditTermActivity extends AppCompatActivity {
     Intent intent;
     int termId;
     int courseId;
-    int taskId;
+    int assessmentId;
     FullDatabase db;
     Term selectedTerm;
     SimpleDateFormat formatter;

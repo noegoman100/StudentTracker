@@ -69,7 +69,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         updateCourseList();
 
 // -------------- FAB Add Stuff
-        FloatingActionButton addCourseFAB = findViewById(R.id.addTaskFAB);
+        FloatingActionButton addCourseFAB = findViewById(R.id.addAssessmentFAB);
         addCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
