@@ -113,7 +113,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void updateCourseList() { //This updates the listView on this mainActivity
+    private void updateCourseList() { //This updates the listView on this termListActivity
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
         //intent = getIntent();
         //int selectedTerm = intent.getIntExtra("", 0);

@@ -68,7 +68,7 @@ public class EditTermActivity extends AppCompatActivity {
                     //todo send out a toast
                 } else {
                     db.termDao().deleteTerm(selectedTerm);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), TermListActivity.class);
                     startActivity(intent);
                 }
             }

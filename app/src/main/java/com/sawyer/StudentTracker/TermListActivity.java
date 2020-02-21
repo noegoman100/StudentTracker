@@ -18,9 +18,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class TermListActivity extends AppCompatActivity {
 
-    public static String LOG_TAG = "MainActivityLog";
+    public static String LOG_TAG = "TermListActivityLog";
     FullDatabase db;
     ListView listView;
     //String[] listItem;
@@ -53,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Position Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
                 int term_id;
-                List<Term> termList = db.termDao().getTermList();
-                for (Term term: termList) {
+                List<Term> termListActivity = db.termDao().getTermListActivity();
+                for (Term term: termListActivity) {
                     System.out.println(term.getTerm_id());
                 }
-                term_id = termList.get(position).getTerm_id();
+                term_id = termListActivity.get(position).getTerm_id();
                 intent.putExtra("termId", term_id);
                 System.out.println("term_id at 0: " + term_id);
                 startActivity(intent);
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         // -------------- End FAB Stuff
 
         //-------- Create Nuke DB button programmatically
-        ConstraintLayout myLayout = findViewById(R.id.mainActivityConstraintLayout);
+        ConstraintLayout myLayout = findViewById(R.id.termListActivityConstraintLayout);
         ConstraintSet set = new ConstraintSet();
         Button nukeDBButton = new Button(getApplicationContext());
         nukeDBButton.setText("Nuke DB Tables");
@@ -119,9 +119,9 @@ public class MainActivity extends AppCompatActivity {
     } // END onCreate
 
 
-    private void updateList() { //This updates the listView on this mainActivity
+    private void updateList() { //This updates the listView on this termListActivity
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-        List<Term> allTerms = db.termDao().getTermList();
+        List<Term> allTerms = db.termDao().getTermListActivity();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
 
 

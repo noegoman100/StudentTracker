@@ -17,7 +17,7 @@
         <activity android:name="com.sawyer.StudentTracker.CourseDetailsActivity" />
         <activity android:name="com.sawyer.StudentTracker.EditTermActivity" />
         <activity android:name="com.sawyer.StudentTracker.TermDetailsActivity" />
-        <activity android:name="com.sawyer.StudentTracker.MainActivity">
+        <activity android:name="com.sawyer.StudentTracker.TermListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
