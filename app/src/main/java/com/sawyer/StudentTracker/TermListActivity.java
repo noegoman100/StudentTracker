@@ -53,7 +53,7 @@ public class TermListActivity extends AppCompatActivity {
                 System.out.println("Position Clicked: " + position);
                 Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
                 int term_id;
-                List<Term> termListActivity = db.termDao().getTermListActivity();
+                List<Term> termListActivity = db.termDao().getTermList();
                 for (Term term: termListActivity) {
                     System.out.println(term.getTerm_id());
                 }
@@ -121,7 +121,7 @@ public class TermListActivity extends AppCompatActivity {
 
     private void updateList() { //This updates the listView on this termListActivity
         //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-        List<Term> allTerms = db.termDao().getTermListActivity();
+        List<Term> allTerms = db.termDao().getTermList();
         System.out.println("Number of Rows in User Table: " + allTerms.size());
 
 

@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface TermDao {
     @Query("SELECT * FROM term_table ORDER BY term_id")
-    List<Term> getTermListActivity();
+    List<Term> getTermList();
 
     @Query("SELECT * FROM term_table WHERE term_id = :termId ORDER BY term_id") //Make sure this only returns One result, or capture error.
     Term getTerm(int termId);

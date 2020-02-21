@@ -58,7 +58,7 @@ public class HomePageActivity extends AppCompatActivity {
         //ConstraintLayout myLayout = findViewById(R.id.homePageConstraintLayout);
         //ConstraintSet set = new ConstraintSet();
         Button populateDBbutton = new Button(getApplicationContext());
-        populateDBbutton.setText("Populate Database");
+        populateDBbutton.setText("Populate Empty Database");
         populateDBbutton.setId(R.id.populateDBButton);
 
         set.constrainHeight(populateDBbutton.getId(), ConstraintSet.WRAP_CONTENT);
@@ -74,6 +74,8 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(LOG_TAG, "populate DB Button Pressed");
+                PopulateDatabase populateDatabase = new PopulateDatabase();
+                populateDatabase.populate(getApplicationContext());
             }
         });
         //-------- End Create Populate DB button programmatically
