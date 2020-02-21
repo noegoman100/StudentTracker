@@ -89,31 +89,31 @@ public class TermListActivity extends AppCompatActivity {
 
         // -------------- End FAB Stuff
 
-        //-------- Create Nuke DB button programmatically
-        ConstraintLayout myLayout = findViewById(R.id.termListActivityConstraintLayout);
-        ConstraintSet set = new ConstraintSet();
-        Button nukeDBButton = new Button(getApplicationContext());
-        nukeDBButton.setText("Nuke DB Tables");
-        nukeDBButton.setId(R.id.nukeDBButton);
-
-        set.constrainHeight(nukeDBButton.getId(), ConstraintSet.WRAP_CONTENT);
-        set.constrainWidth(nukeDBButton.getId(), ConstraintSet.WRAP_CONTENT);
-        set.connect(nukeDBButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 8);
-        set.connect(nukeDBButton.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 8);
-
-        myLayout.addView(nukeDBButton);
-        setContentView(myLayout);
-        set.applyTo(myLayout);
-
-        nukeDBButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "Nuke DB Button Pressed");
-                db.clearAllTables();
-                updateList();
-            }
-        });
-        //-------- End Create Nuke DB button programmatically
+//        //-------- Create Nuke DB button programmatically
+//        ConstraintLayout myLayout = findViewById(R.id.termListActivityConstraintLayout);
+//        ConstraintSet set = new ConstraintSet();
+//        Button nukeDBButton = new Button(getApplicationContext());
+//        nukeDBButton.setText("Nuke DB Tables");
+//        nukeDBButton.setId(R.id.nukeDBButton);
+//
+//        set.constrainHeight(nukeDBButton.getId(), ConstraintSet.WRAP_CONTENT);
+//        set.constrainWidth(nukeDBButton.getId(), ConstraintSet.WRAP_CONTENT);
+//        set.connect(nukeDBButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 8);
+//        set.connect(nukeDBButton.getId(), ConstraintSet.LEFT, ConstraintSet.PARENT_ID, ConstraintSet.LEFT, 8);
+//
+//        myLayout.addView(nukeDBButton);
+//        setContentView(myLayout);
+//        set.applyTo(myLayout);
+//
+//        nukeDBButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d(LOG_TAG, "Nuke DB Button Pressed");
+//                db.clearAllTables();
+//                updateList();
+//            }
+//        });
+//        //-------- End Create Nuke DB button programmatically
 
 
     } // END onCreate
