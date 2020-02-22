@@ -85,6 +85,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
                 alertTitleEditText.setText(selectedAssessment.getAssessment_alert_name());
                 alertStartDateEditText.setText(formatter.format(selectedAssessment.getAssessment_alert_datetime()));
                 assessmentDueDate.setText(formatter.format(selectedAssessment.getAssessment_due()));
+                assessmentDueDate.setText("TESTING");//todo remove me.
             } else {System.out.println("Null Object");}
         } catch (Exception e) {System.out.println("selectedAssessment failed");}
         //---- End Update Views

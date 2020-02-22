@@ -31,7 +31,7 @@ public class PopulateDatabase extends AppCompatActivity {
             insertTerms();
             insertCourses();
             insertAssessments();
-            insertCourseMentors();
+            insertCoursementors();
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(LOG_TAG, "Populate DB Failed");
@@ -121,7 +121,7 @@ public class PopulateDatabase extends AppCompatActivity {
         start.add(Calendar.WEEK_OF_MONTH, 3); //offset
         end.add(Calendar.WEEK_OF_MONTH, 3); //offset
         start.add(Calendar.WEEK_OF_MONTH, -2);
-        end.add(Calendar.MINUTE, 5);
+        end.add(Calendar.WEEK_OF_MONTH, 1);
         tempCourse1.setCourse_name("First Course in Term");
         tempCourse1.setCourse_start(start.getTime());
         tempCourse1.setCourse_end(end.getTime());
@@ -164,7 +164,7 @@ public class PopulateDatabase extends AppCompatActivity {
         start.add(Calendar.WEEK_OF_MONTH, 6); //offset
         end.add(Calendar.WEEK_OF_MONTH, 6); //offset
         start.add(Calendar.WEEK_OF_MONTH, -2);
-        end.add(Calendar.MINUTE, 5);
+        end.add(Calendar.DAY_OF_MONTH, 3);
         tempCourse1.setCourse_name("First Course in Term");
         tempCourse1.setCourse_start(start.getTime());
         tempCourse1.setCourse_end(end.getTime());
@@ -201,16 +201,417 @@ public class PopulateDatabase extends AppCompatActivity {
         db.courseDao().insertCourse(tempCourse1);
         db.courseDao().insertCourse(tempCourse2);
         db.courseDao().insertCourse(tempCourse3);
-
-        //todo
     }
 
     private void insertAssessments() {
-        //todo
+        List<Term> termList;
+        List<Course> courseList;
+        termList = db.termDao().getTermList();
+        Calendar tempCalendar;
+
+        //<editor-fold desc="Term1Course1">
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+        //<editor-fold desc="Term1Course2">
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+        //<editor-fold desc="Term1Course3">
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+
+        //<editor-fold desc="Term2Course1">
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+        //<editor-fold desc="Term2Course2">
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+        //<editor-fold desc="Term2Course3">
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+
+        //<editor-fold desc="Term3Course1">
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+        //<editor-fold desc="Term3Course2">
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
+        //<editor-fold desc="Term3Course3">
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
+        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment1.setAssessment_name("Assessment 1");
+        tempAssessment1.setAssessment_info("Info about this assignment");
+        tempAssessment1.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempAssessment1.setAssessment_due(tempCalendar.getTime());
+        tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        db.assessmentDao().insertAssessment(tempAssessment1);
+        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment2.setAssessment_name("Assessment 2");
+        tempAssessment2.setAssessment_info("Info about this assignment");
+        tempAssessment2.setAssessment_type("Objective");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempAssessment2.setAssessment_due(tempCalendar.getTime());
+        tempAssessment2.setAssessment_alert_name("Alert 2");
+        db.assessmentDao().insertAssessment(tempAssessment2);
+        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment3.setAssessment_name("Assessment 3");
+        tempAssessment3.setAssessment_info("Info about this assignment");
+        tempAssessment3.setAssessment_type("Performance");
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
+        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempAssessment3.setAssessment_due(tempCalendar.getTime());
+        tempAssessment3.setAssessment_alert_name("Alert 3");
+        db.assessmentDao().insertAssessment(tempAssessment3);
+        //</editor-fold>
     }
 
-    private void insertCourseMentors() {
-        //todo
+    private void insertCoursementors() {
+        List<Term> termList;
+        List<Course> courseList;
+        termList = db.termDao().getTermList();
+
+        //<editor-fold desc="AddCoursementorsTerm1">
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
+        tempCourseMentor1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        tempCourseMentor1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        tempCourseMentor1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        //</editor-fold>
+        //<editor-fold desc="AddCoursementorsTerm2">
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
+        tempCourseMentor1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        tempCourseMentor1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        tempCourseMentor1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        //</editor-fold>
+        //<editor-fold desc="AddCoursementorsTerm3">
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
+        tempCourseMentor1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        tempCourseMentor1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        tempCourseMentor1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempCourseMentor1.setMentor_name("John Doe 1");
+        tempCourseMentor1.setMentor_email("johndoe@nothere.com");
+        tempCourseMentor1.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor1);
+        tempCourseMentor2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempCourseMentor2.setMentor_name("John Doe 2");
+        tempCourseMentor2.setMentor_email("johndoe2@nothere.com");
+        tempCourseMentor2.setMentor_phone("555-555-5555");
+        db.coursementorDao().insertCoursementor(tempCourseMentor2);
+        //</editor-fold>
+
     }
 
 

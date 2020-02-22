@@ -199,6 +199,9 @@ public class TermDetailsActivity extends AppCompatActivity {
 //            Log.d(LOG_TAG, "result double: " + resultDouble);
         } else {resultDouble = 1;}
 
+        if (resultDouble >= 100) resultDouble = 100;
+        if (resultDouble <=0) resultDouble = 0;
+
         return String.format("%.2f", resultDouble) + "%";
     }
 }
