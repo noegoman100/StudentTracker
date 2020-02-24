@@ -100,6 +100,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void updateViews(){
+
         if (db.termDao().getTermList() != null) { //Don't update anything until there is something to update.
             //--Count Pending/In-Progress Courses
             //get full list of courses by get term count and loop through all appending courseList, loop through and count matches for strings "Pending" and "In-Progress"
@@ -115,8 +116,34 @@ public class HomePageActivity extends AppCompatActivity {
                         courseList.addAll(db.courseDao().getCourseList(i+1));
                     }
                 }
-                //todo now loop through and count matching terms. 
+                //todo now loop through and count matching terms.
                 Log.d(LOG_TAG, "courseList Count: " + courseList.size());
+                int pendingCount = 0;
+                int completed = 0;
+                int dropped = 0;
+                for (int i = 0; i < courseList.size(); i++) {
+                    switch(courseList.get(i).getCourse_status())
+                    {
+                        case "Pending":
+                            pendingCount++;
+                            break;
+                        case "In-Progress":
+                            pendingCount++;
+                            break;
+                        case "Completed":
+                            completed++;
+                            break;
+                        case "Dropped":
+                            dropped++;
+                            break;
+                    }
+                }
+                Log.d(LOG_TAG, "pendingCount: " + pendingCount);
+                Log.d(LOG_TAG, "completed: " + completed);
+                Log.d(LOG_TAG, "dropped: " + dropped);
+                coursesPendingTextView.setText(String.valueOf(pendingCount));
+                coursesCompletedTextView.setText(String.valueOf(completed));
+                coursesDroppedTextView.setText(String.valueOf(dropped));
             }
 
 
