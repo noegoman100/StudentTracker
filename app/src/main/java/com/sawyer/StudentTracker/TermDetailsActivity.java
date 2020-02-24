@@ -171,7 +171,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         }
         //----- End Update Views
         //-----Update the Title + Percent Complete
-        String newTitle = "Term: " + selectedTerm.getTerm_name() + " - " + percentComplete() + " Done"; //todo .getTerm_name is crashing app
+        String newTitle = "Term: " + selectedTerm.getTerm_name() + ": " + percentComplete(); //todo .getTerm_name is crashing app
 
         setTitle(newTitle);
         //-----Update the Title + Percent Complete
@@ -186,22 +186,26 @@ public class TermDetailsActivity extends AppCompatActivity {
         Long end = selectedTerm.getTerm_end().getTime();
         Long now = calendar.getTime().getTime();
         double resultDouble = 0;
-        if (!(end-start==0)){
-            Long nowMinStart = now-start;
-            Long endMinStart = end-start;
-            double nowMinS = nowMinStart.intValue();
-            double endMinS = endMinStart.intValue();
-            double divideDouble = (nowMinS/endMinS);
-            resultDouble = divideDouble * 100;
-//            Log.d(LOG_TAG, "now-start double: " + nowMinS);
-//            Log.d(LOG_TAG, "end-start double: " + endMinS);
-//            Log.d(LOG_TAG, "divide double: " + divideDouble);
-//            Log.d(LOG_TAG, "result double: " + resultDouble);
-        } else {resultDouble = 1;}
+        if (now < start) {return "Pending";}
+            else if (now >= end) {return "Complete";}
+                else {
+                    Log.d(LOG_TAG, "Now: " + now);
+                    Log.d(LOG_TAG, "Start: " + start);
+                    Log.d(LOG_TAG, "End: " + end);
 
-        if (resultDouble >= 100) resultDouble = 100;
-        if (resultDouble <=0) resultDouble = 0;
+                    Long nowMinStart = now-start; //positive value
+                    Long endMinStart = end-start; //Positive Value Always
+                    Log.d(LOG_TAG, "nowMinStart: " + nowMinStart);
+                    Log.d(LOG_TAG, "endMinStart: " + endMinStart);
+                    double nowMinS = nowMinStart.doubleValue();
+                    double endMinS = endMinStart.doubleValue();
+                    resultDouble = (nowMinS/endMinS) * 100;
+                    Log.d(LOG_TAG, "nowMinS: " + nowMinS);
+                    Log.d(LOG_TAG, "endMinS: " + endMinS);
+                    Log.d(LOG_TAG, "resultDouble: " + resultDouble);
 
-        return String.format("%.2f", resultDouble) + "%";
+                    return String.format("%.1f", resultDouble) + "%";
+                }
+
     }
 }

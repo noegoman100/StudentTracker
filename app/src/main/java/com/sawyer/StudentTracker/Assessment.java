@@ -38,6 +38,8 @@ public class Assessment {
     private String assessment_alert_name;
     @ColumnInfo(name = "assessment_alert_datetime")
     private Date assessment_alert_datetime;
+    @ColumnInfo(name = "assessment_status")
+    private String assessment_status;
 
     public int getAssessment_id() {
         return assessment_id;
@@ -109,5 +111,13 @@ public class Assessment {
 
     public void setAssessment_alert_datetime(Date assessment_alert_datetime) {
         this.assessment_alert_datetime = assessment_alert_datetime;
+    }
+
+    public String getAssessment_status() {
+        return assessment_status;
+    }
+
+    public void setAssessment_status(String assessment_status) {
+        this.assessment_status = assessment_status;
     }
 }

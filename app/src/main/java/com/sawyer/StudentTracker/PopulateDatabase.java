@@ -45,24 +45,24 @@ public class PopulateDatabase extends AppCompatActivity {
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, -1);
-        end.add(Calendar.WEEK_OF_MONTH, 2);
+        start.add(Calendar.MONTH, -2);
+        end.add(Calendar.MONTH, 1);
         tempTerm1.setTerm_name("My First Term");
         tempTerm1.setTerm_start(start.getTime());
         tempTerm1.setTerm_end(end.getTime());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 3);
-        end.add(Calendar.WEEK_OF_MONTH, 6);
+        start.add(Calendar.MONTH, 2);
+        end.add(Calendar.MONTH, 5);
         tempTerm2.setTerm_name("2nd Term");
         tempTerm2.setTerm_start(start.getTime());
         tempTerm2.setTerm_end(end.getTime());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 7);
-        end.add(Calendar.WEEK_OF_MONTH, 10);
+        start.add(Calendar.MONTH, 6);
+        end.add(Calendar.MONTH, 9);
         tempTerm3.setTerm_name("The Third Term");
         tempTerm3.setTerm_start(start.getTime());
         tempTerm3.setTerm_end(end.getTime());
@@ -81,35 +81,35 @@ public class PopulateDatabase extends AppCompatActivity {
         //<editor-fold desc="Term1 Courses">
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, -2);
-        end.add(Calendar.MINUTE, 5);
+        start.add(Calendar.MONTH, -2);
+        end.add(Calendar.MONTH, -1);
         tempCourse1.setCourse_name("First Course in Term");
         tempCourse1.setCourse_start(start.getTime());
         tempCourse1.setCourse_end(end.getTime());
         tempCourse1.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse1.setCourse_status("Active");
+        tempCourse1.setCourse_status("Completed");
         tempCourse1.setTerm_id_fk(termList.get(0).getTerm_id());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, -1);
-        end.add(Calendar.WEEK_OF_MONTH, 1);
+        start.add(Calendar.MONTH, -1);
+        //end.add(Calendar.WEEK_OF_MONTH, 1);
         tempCourse2.setCourse_name("Second Course in Term");
         tempCourse2.setCourse_start(start.getTime());
         tempCourse2.setCourse_end(end.getTime());
         tempCourse2.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse2.setCourse_status("Active");
+        tempCourse2.setCourse_status("Completed");
         tempCourse2.setTerm_id_fk(termList.get(0).getTerm_id());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 1);
-        end.add(Calendar.WEEK_OF_MONTH, 2);
+        //start.add(Calendar.WEEK_OF_MONTH, 1);
+        end.add(Calendar.MONTH, 1);
         tempCourse3.setCourse_name("Third Course in Term");
         tempCourse3.setCourse_start(start.getTime());
         tempCourse3.setCourse_end(end.getTime());
         tempCourse3.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse3.setCourse_status("Active");
+        tempCourse3.setCourse_status("In-Progress");
         tempCourse3.setTerm_id_fk(termList.get(0).getTerm_id());
         //</editor-fold>
         db.courseDao().insertCourse(tempCourse1);
@@ -118,41 +118,41 @@ public class PopulateDatabase extends AppCompatActivity {
         //<editor-fold desc="Term2 Courses">
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 3); //offset
-        end.add(Calendar.WEEK_OF_MONTH, 3); //offset
-        start.add(Calendar.WEEK_OF_MONTH, -2);
-        end.add(Calendar.WEEK_OF_MONTH, 1);
+        //start.add(Calendar.WEEK_OF_MONTH, 3); //offset
+        //end.add(Calendar.WEEK_OF_MONTH, 3); //offset
+        start.add(Calendar.MONTH, 2);
+        end.add(Calendar.MONTH, 3);
         tempCourse1.setCourse_name("First Course in Term");
         tempCourse1.setCourse_start(start.getTime());
         tempCourse1.setCourse_end(end.getTime());
         tempCourse1.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse1.setCourse_status("Active");
+        tempCourse1.setCourse_status("Pending");
         tempCourse1.setTerm_id_fk(termList.get(1).getTerm_id());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 3); //offset
-        end.add(Calendar.WEEK_OF_MONTH, 3); //offset
-        start.add(Calendar.WEEK_OF_MONTH, -1);
-        end.add(Calendar.WEEK_OF_MONTH, 1);
+        //start.add(Calendar.WEEK_OF_MONTH, 3); //offset
+        //end.add(Calendar.WEEK_OF_MONTH, 3); //offset
+        start.add(Calendar.MONTH, 3);
+        end.add(Calendar.MONTH, 4);
         tempCourse2.setCourse_name("Second Course in Term");
         tempCourse2.setCourse_start(start.getTime());
         tempCourse2.setCourse_end(end.getTime());
         tempCourse2.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse2.setCourse_status("Active");
+        tempCourse2.setCourse_status("Pending");
         tempCourse2.setTerm_id_fk(termList.get(1).getTerm_id());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 3); //offset
-        end.add(Calendar.WEEK_OF_MONTH, 3); //offset
-        start.add(Calendar.WEEK_OF_MONTH, 1);
-        end.add(Calendar.WEEK_OF_MONTH, 2);
+        //start.add(Calendar.WEEK_OF_MONTH, 3); //offset
+        //end.add(Calendar.WEEK_OF_MONTH, 3); //offset
+        start.add(Calendar.MONTH, 4);
+        end.add(Calendar.MONTH, 5);
         tempCourse3.setCourse_name("Third Course in Term");
         tempCourse3.setCourse_start(start.getTime());
         tempCourse3.setCourse_end(end.getTime());
         tempCourse3.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse3.setCourse_status("Active");
+        tempCourse3.setCourse_status("Pending");
         tempCourse3.setTerm_id_fk(termList.get(1).getTerm_id());
         //</editor-fold>
         db.courseDao().insertCourse(tempCourse1);
@@ -161,41 +161,41 @@ public class PopulateDatabase extends AppCompatActivity {
         //<editor-fold desc="Term3 Courses">
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 6); //offset
-        end.add(Calendar.WEEK_OF_MONTH, 6); //offset
-        start.add(Calendar.WEEK_OF_MONTH, -2);
-        end.add(Calendar.DAY_OF_MONTH, 3);
+        //start.add(Calendar.WEEK_OF_MONTH, 6); //offset
+        //end.add(Calendar.WEEK_OF_MONTH, 6); //offset
+        start.add(Calendar.MONTH, 6);
+        end.add(Calendar.MONTH, 7);
         tempCourse1.setCourse_name("First Course in Term");
         tempCourse1.setCourse_start(start.getTime());
         tempCourse1.setCourse_end(end.getTime());
         tempCourse1.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse1.setCourse_status("Active");
+        tempCourse1.setCourse_status("Pending");
         tempCourse1.setTerm_id_fk(termList.get(2).getTerm_id());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 6); //offset
-        end.add(Calendar.WEEK_OF_MONTH, 6); //offset
-        start.add(Calendar.WEEK_OF_MONTH, -1);
-        end.add(Calendar.WEEK_OF_MONTH, 1);
+        //start.add(Calendar.WEEK_OF_MONTH, 6); //offset
+        //end.add(Calendar.WEEK_OF_MONTH, 6); //offset
+        start.add(Calendar.MONTH, 7);
+        end.add(Calendar.MONTH, 8);
         tempCourse2.setCourse_name("Second Course in Term");
         tempCourse2.setCourse_start(start.getTime());
         tempCourse2.setCourse_end(end.getTime());
         tempCourse2.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse2.setCourse_status("Active");
+        tempCourse2.setCourse_status("Pending");
         tempCourse2.setTerm_id_fk(termList.get(2).getTerm_id());
 
         start = Calendar.getInstance();
         end = Calendar.getInstance();
-        start.add(Calendar.WEEK_OF_MONTH, 6); //offset
-        end.add(Calendar.WEEK_OF_MONTH, 6); //offset
-        start.add(Calendar.WEEK_OF_MONTH, 1);
-        end.add(Calendar.WEEK_OF_MONTH, 2);
+        //start.add(Calendar.WEEK_OF_MONTH, 6); //offset
+        //end.add(Calendar.WEEK_OF_MONTH, 6); //offset
+        start.add(Calendar.MONTH, 8);
+        end.add(Calendar.MONTH, 9);
         tempCourse3.setCourse_name("Third Course in Term");
         tempCourse3.setCourse_start(start.getTime());
         tempCourse3.setCourse_end(end.getTime());
         tempCourse3.setCourse_notes("PrePopulate Notes - data data data Notes Notes Notes");
-        tempCourse3.setCourse_status("Active");
+        tempCourse3.setCourse_status("Pending");
         tempCourse3.setTerm_id_fk(termList.get(2).getTerm_id());
         //</editor-fold>
         db.courseDao().insertCourse(tempCourse1);
@@ -210,297 +210,354 @@ public class PopulateDatabase extends AppCompatActivity {
         Calendar tempCalendar;
 
         //<editor-fold desc="Term1Course1">
-        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        //tempCalendar.add(Calendar.MONTH, 2) //Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        //tempCalendar.add(Calendar.MONTH, 2) //Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        //tempCalendar.add(Calendar.MONTH, 2) //Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term1Course2">
-        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.MONTH, 1);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 1);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 1);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term1Course3">
-        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 2);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
+        tempCalendar.add(Calendar.MONTH, 2);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 2);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
 
         //<editor-fold desc="Term2Course1">
-        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 4);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 4);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 4);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term2Course2">
-        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 5);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 5);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 5);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term2Course3">
-        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(1).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 6);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 6);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 3);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 6);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
 
         //<editor-fold desc="Term3Course1">
-        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(0).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 8);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 8);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 8);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term3Course2">
-        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(1).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 9);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 9);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 9);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term3Course3">
-        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id());
-        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id());
+        courseList = db.courseDao().getCourseList(termList.get(2).getTerm_id()); //Select term 0,1,2
+        tempAssessment1.setCourse_id_fk(courseList.get(2).getCourse_id()); //Select Course 0,1,2
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
+        tempAssessment1.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, -3);
+        tempCalendar.add(Calendar.MONTH, 10);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
         db.assessmentDao().insertAssessment(tempAssessment1);
-        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
+        tempAssessment2.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        tempCalendar.add(Calendar.MONTH, 10);//Offset
+        tempCalendar.add(Calendar.MONTH, -2);
+        tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
         db.assessmentDao().insertAssessment(tempAssessment2);
-        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());
+        tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
+        tempAssessment3.setAssessment_status("Pending");
         tempCalendar = Calendar.getInstance();
-        tempCalendar.add(Calendar.WEEK_OF_YEAR, 7);
-        tempCalendar.add(Calendar.DAY_OF_YEAR, 10);
+        tempCalendar.add(Calendar.MONTH, 10);//Offset
+        tempCalendar.add(Calendar.MONTH, -1);
+        //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
         db.assessmentDao().insertAssessment(tempAssessment3);
