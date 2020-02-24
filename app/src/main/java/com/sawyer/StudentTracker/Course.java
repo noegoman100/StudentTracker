@@ -34,6 +34,8 @@ public class Course {
     private String course_status;
     @ColumnInfo(name = "course_notes")
     private String course_notes;
+    @ColumnInfo(name = "course_alert_date")
+    private Date course_alert_date;
 
     public int getCourse_id() {
         return course_id;
@@ -89,5 +91,13 @@ public class Course {
 
     public void setCourse_notes(String course_notes) {
         this.course_notes = course_notes;
+    }
+
+    public Date getCourse_alert_date() {
+        return course_alert_date;
+    }
+
+    public void setCourse_alert_date(Date course_alert_date) {
+        this.course_alert_date = course_alert_date;
     }
 }

@@ -9,17 +9,35 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.List;
 
 public class HomePageActivity extends AppCompatActivity {
     public static String LOG_TAG = "HomePageAct";
     FullDatabase db;
     Button startButton;
+    TextView coursesPendingTextView;
+    TextView coursesCompletedTextView;
+    TextView coursesDroppedTextView;
+    TextView assessmentsPendingTextView;
+    TextView assessmentsPassedTextView;
+    TextView assessmentsFailedTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         db = FullDatabase.getInstance(getApplicationContext());
+        //-----------Attach Views
+        coursesPendingTextView = findViewById(R.id.coursesPendingTextView);
+        coursesCompletedTextView = findViewById(R.id.coursesCompletedTextView);
+        coursesDroppedTextView = findViewById(R.id.coursesDroppedTextView);
+        assessmentsPendingTextView = findViewById(R.id.assessmentsPendingTextView);
+        assessmentsPassedTextView = findViewById(R.id.assessmentsPassedTextView);
+        assessmentsFailedTextView = findViewById(R.id.assessmentsFailedTextView);
+        //-----------End Attach Views
+        updateViews();
         //-----------Start Button Functionality
         startButton = findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -79,5 +97,36 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
         //-------- End Create Populate DB button programmatically
+    }
+
+    private void updateViews(){
+        if (db.termDao().getTermList() != null) { //Don't update anything until there is something to update.
+            //--Count Pending/In-Progress Courses
+            //get full list of courses by get term count and loop through all appending courseList, loop through and count matches for strings "Pending" and "In-Progress"
+            List<Term> termList;
+            List<Course> fullCourseList;
+            List<Course> courseList;
+            termList = db.termDao().getTermList();
+            int termCount = termList.size();
+            if(db.courseDao().getCourseList(1) != null) { //Don't update unless there is at least one course
+                courseList = db.courseDao().getCourseList(1);
+                if (termCount >= 1) {
+                    for (int i = 1; i < termCount; i++) {
+                        courseList.addAll(db.courseDao().getCourseList(i+1));
+                    }
+                }
+                //todo now loop through and count matching terms. 
+                Log.d(LOG_TAG, "courseList Count: " + courseList.size());
+            }
+
+
+            //--End Count Pending/In-Progress Courses
+        }
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        updateViews();
     }
 }

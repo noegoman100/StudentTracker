@@ -215,7 +215,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
-        tempAssessment1.setAssessment_status("Pending");
+        tempAssessment1.setAssessment_status("Passed");
         tempCalendar = Calendar.getInstance();
         //tempCalendar.add(Calendar.MONTH, 2) //Offset
         tempCalendar.add(Calendar.MONTH, -2);
@@ -227,7 +227,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
-        tempAssessment2.setAssessment_status("Pending");
+        tempAssessment2.setAssessment_status("Passed");
         tempCalendar = Calendar.getInstance();
         //tempCalendar.add(Calendar.MONTH, 2) //Offset
         tempCalendar.add(Calendar.MONTH, -2);
@@ -239,7 +239,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
-        tempAssessment3.setAssessment_status("Pending");
+        tempAssessment3.setAssessment_status("Failed");
         tempCalendar = Calendar.getInstance();
         //tempCalendar.add(Calendar.MONTH, 2) //Offset
         tempCalendar.add(Calendar.MONTH, -1);
@@ -254,7 +254,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempAssessment1.setAssessment_name("Assessment 1");
         tempAssessment1.setAssessment_info("Info about this assignment");
         tempAssessment1.setAssessment_type("Performance");
-        tempAssessment1.setAssessment_status("Pending");
+        tempAssessment1.setAssessment_status("Passed");
         tempCalendar = Calendar.getInstance();
         tempCalendar.add(Calendar.MONTH, 1);//Offset
         tempCalendar.add(Calendar.MONTH, -2);
@@ -266,7 +266,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempAssessment2.setAssessment_name("Assessment 2");
         tempAssessment2.setAssessment_info("Info about this assignment");
         tempAssessment2.setAssessment_type("Objective");
-        tempAssessment2.setAssessment_status("Pending");
+        tempAssessment2.setAssessment_status("Passed");
         tempCalendar = Calendar.getInstance();
         tempCalendar.add(Calendar.MONTH, 1);//Offset
         tempCalendar.add(Calendar.MONTH, -2);
@@ -278,7 +278,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempAssessment3.setAssessment_name("Assessment 3");
         tempAssessment3.setAssessment_info("Info about this assignment");
         tempAssessment3.setAssessment_type("Performance");
-        tempAssessment3.setAssessment_status("Pending");
+        tempAssessment3.setAssessment_status("Passed");
         tempCalendar = Calendar.getInstance();
         tempCalendar.add(Calendar.MONTH, 1);//Offset
         tempCalendar.add(Calendar.MONTH, -1);

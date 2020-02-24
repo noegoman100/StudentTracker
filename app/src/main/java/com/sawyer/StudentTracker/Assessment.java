@@ -32,14 +32,14 @@ public class Assessment {
     private Date assessment_due;
     @ColumnInfo(name = "assessment_info")
     private String assessment_info;
-//    @ColumnInfo(name = "assessment_set_alert")
-//    private int assessment_set_alert;
     @ColumnInfo(name = "assessment_alert_name")
     private String assessment_alert_name;
     @ColumnInfo(name = "assessment_alert_datetime")
     private Date assessment_alert_datetime;
     @ColumnInfo(name = "assessment_status")
     private String assessment_status;
+    @ColumnInfo(name = "assessment_alert_date")
+    private Date assessment_alert_date;
 
     public int getAssessment_id() {
         return assessment_id;
@@ -89,14 +89,6 @@ public class Assessment {
         this.assessment_info = assessment_info;
     }
 
-//    public int getAssessment_set_alert() {
-//        return assessment_set_alert;
-//    }
-//
-//    public void setAssessment_set_alert(int assessment_set_alert) {
-//        this.assessment_set_alert = assessment_set_alert;
-//    }
-
     public String getAssessment_alert_name() {
         return assessment_alert_name;
     }
@@ -119,5 +111,13 @@ public class Assessment {
 
     public void setAssessment_status(String assessment_status) {
         this.assessment_status = assessment_status;
+    }
+
+    public Date getAssessment_alert_date() {
+        return assessment_alert_date;
+    }
+
+    public void setAssessment_alert_date(Date assessment_alert_date) {
+        this.assessment_alert_date = assessment_alert_date;
     }
 }
