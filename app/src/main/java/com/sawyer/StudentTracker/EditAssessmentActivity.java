@@ -23,7 +23,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
     public static final String LOG_TAG = "EditAssessmentAct";
     EditText assessmentTypeEditText;
     EditText assessmentTitleEditText;
-    EditText assessmentDueDate;
+    EditText assessmentDueDateEditText;
     EditText assessmentInfoEditText;
     EditText alertTitleEditText;
     EditText alertStartDateEditText;
@@ -50,13 +50,72 @@ public class EditAssessmentActivity extends AppCompatActivity {
         saveAssessmentButton = findViewById(R.id.saveAssessmentButton);
         deleteAssessmentButton = findViewById(R.id.deleteAssessmentButton);
         assessmentTitleEditText = findViewById(R.id.assessmentTitileEditText);
-        assessmentDueDate = findViewById(R.id.assessmentDueDate);
+        assessmentDueDateEditText = findViewById(R.id.assessmentDueDateEditText);
         assessmentInfoEditText = findViewById(R.id.assessmentInfoEditText);
         setAlertCheckBox = findViewById(R.id.setAlertCheckBox);
         alertTitleEditText = findViewById(R.id.alertTitleEditText);
         alertStartDateEditText = findViewById(R.id.alertStartDate);
         //alertEndDateEditText = findViewById(R.id.alertEndDate);
         //----End Attach Views to Fields
+        updateViews();
+        //------- Delete Assessment Button
+            deleteAssessmentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    db.assessmentDao().deleteAssessment(selectedAssessment);
+                    finish();
+                }
+            });
+        //------- End Delete Assessment Button
+        //--------- Save Assessment Button
+        saveAssessmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(EditAssessmentActivity.LOG_TAG, "Save Assessment Button Pressed");
+                selectedAssessment.setAssessment_type(assessmentTypeEditText.getText().toString());
+                selectedAssessment.setAssessment_name(assessmentTitleEditText.getText().toString());
+                selectedAssessment.setAssessment_info(assessmentInfoEditText.getText().toString());
+                //selectedAssessment.setAssessment_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
+                selectedAssessment.setAssessment_alert_name(alertTitleEditText.getText().toString());
+
+                try {
+                    selectedAssessment.setAssessment_alert_date(formatter.parse(alertStartDateEditText.getText().toString()));
+                    selectedAssessment.setAssessment_due(formatter.parse(assessmentDueDateEditText.getText().toString()));
+                    Log.d(LOG_TAG, "updated alert date");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //---------------Set the Alarm(s)
+                if(setAlertCheckBox.isChecked()) {
+                    setAlarm(selectedAssessment.getAssessment_alert_date());
+                }
+                //---------------End Set the Alarm(s)
+                db.assessmentDao().updateAssessment(selectedAssessment);
+
+                finish();
+            }
+        });
+        //--------- End Save Assessment Button
+
+
+    }
+
+    private void setAlarm(Date dateProvided) {
+        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(getApplicationContext(), EditAssessmentActivity.class);
+            intent.putExtra("termId", termId);
+            intent.putExtra("courseId", courseId);
+            intent.putExtra("assessmentId", assessmentId);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
+            Log.d(LOG_TAG, "The alarm was set");
+        } else {
+            Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateViews() {
         //---- Update Views
 
 
@@ -83,66 +142,11 @@ public class EditAssessmentActivity extends AppCompatActivity {
                 assessmentInfoEditText.setText(selectedAssessment.getAssessment_info());
                 //setAlertCheckBox.setChecked((selectedAssessment.getAssessment_set_alert()==1)?true:false);
                 alertTitleEditText.setText(selectedAssessment.getAssessment_alert_name());
-                alertStartDateEditText.setText(formatter.format(selectedAssessment.getAssessment_alert_datetime()));
-                assessmentDueDate.setText(formatter.format(selectedAssessment.getAssessment_due()));
-                assessmentDueDate.setText("TESTING");//todo remove me.
+                alertStartDateEditText.setText(formatter.format(selectedAssessment.getAssessment_alert_date()));
+                assessmentDueDateEditText.setText(formatter.format(selectedAssessment.getAssessment_due()));
+                Log.d(LOG_TAG, "assessmentDueDate: " + assessmentDueDateEditText.getText().toString());
             } else {System.out.println("Null Object");}
         } catch (Exception e) {System.out.println("selectedAssessment failed");}
         //---- End Update Views
-        //------- Delete Assessment Button
-            deleteAssessmentButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    db.assessmentDao().deleteAssessment(selectedAssessment);
-                    finish();
-                }
-            });
-        //------- End Delete Assessment Button
-        //--------- Save Assessment Button
-        saveAssessmentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(EditAssessmentActivity.LOG_TAG, "Save Assessment Button Pressed");
-                selectedAssessment.setAssessment_type(assessmentTypeEditText.getText().toString());
-                selectedAssessment.setAssessment_name(assessmentTitleEditText.getText().toString());
-                selectedAssessment.setAssessment_info(assessmentInfoEditText.getText().toString());
-                //selectedAssessment.setAssessment_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
-                selectedAssessment.setAssessment_alert_name(alertTitleEditText.getText().toString());
-
-                try {
-                    selectedAssessment.setAssessment_alert_datetime(formatter.parse(alertStartDateEditText.getText().toString()));
-                    selectedAssessment.setAssessment_due(formatter.parse(assessmentDueDate.getText().toString()));
-                    Log.d(LOG_TAG, "updated alert date");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                //---------------Set the Alarm(s)
-                if(setAlertCheckBox.isChecked()) {
-                    setAlarm(selectedAssessment.getAssessment_alert_datetime());
-                }
-                //---------------End Set the Alarm(s)
-                db.assessmentDao().updateAssessment(selectedAssessment);
-
-                finish();
-            }
-        });
-        //--------- End Save Assessment Button
-
-
-    }
-
-    private void setAlarm(Date dateProvided) {
-        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(getApplicationContext(), EditAssessmentActivity.class);
-            intent.putExtra("termId", termId);
-            intent.putExtra("courseId", courseId);
-            intent.putExtra("assessmentId", assessmentId);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Log.d(LOG_TAG, "The alarm was set");
-        } else {
-            Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
-        }
     }
 }

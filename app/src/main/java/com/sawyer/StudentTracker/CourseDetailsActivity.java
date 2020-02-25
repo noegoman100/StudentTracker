@@ -96,7 +96,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 tempAssessment.setAssessment_due(Calendar.getInstance().getTime());
                 tempAssessment.setAssessment_info("Assessment info here");
                 tempAssessment.setAssessment_alert_name("Temp Assessment Name");
-                tempAssessment.setAssessment_alert_datetime(Calendar.getInstance().getTime());
+                tempAssessment.setAssessment_alert_date(Calendar.getInstance().getTime());
                 //tempAssessment.setAssessment_set_alert(0);
                 tempAssessment.setCourse_id_fk(courseId);
                 try {
@@ -204,6 +204,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         updateAssessmentList();
         //----------End Update Views
     }
+
     private String percentComplete() {
         //We need Start Date, End Date, and Today's Date
         //if (selectedCourse==null){selectedCourse = new Course();}
@@ -211,8 +212,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         Long end = selectedCourse.getCourse_end().getTime();
         Long now = Calendar.getInstance().getTime().getTime();
         double resultDouble = 0;
-        if (now < start) {return "Pending";}
-        else if (now > end) {return "Complete";}
+        if (now < start) {return "";}
+        else if (now > end) {return "";}
         else {
             Log.d(LOG_TAG, "Now: " + now);
             Log.d(LOG_TAG, "Start: " + start);

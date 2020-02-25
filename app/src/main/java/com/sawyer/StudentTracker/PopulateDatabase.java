@@ -208,6 +208,8 @@ public class PopulateDatabase extends AppCompatActivity {
         List<Course> courseList;
         termList = db.termDao().getTermList();
         Calendar tempCalendar;
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DAY_OF_YEAR, -1);
 
         //<editor-fold desc="Term1Course1">
         courseList = db.courseDao().getCourseList(termList.get(0).getTerm_id()); //Select term 0,1,2
@@ -222,6 +224,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -234,6 +237,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -246,6 +250,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term1Course2">
@@ -261,6 +266,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -273,6 +279,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -285,6 +292,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term1Course3">
@@ -300,6 +308,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -312,6 +321,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -324,6 +334,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
 
@@ -340,6 +351,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -352,6 +364,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -364,6 +377,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term2Course2">
@@ -379,6 +393,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -391,6 +406,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -403,6 +419,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term2Course3">
@@ -418,6 +435,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -430,6 +448,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -442,6 +461,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
 
@@ -458,6 +478,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -470,6 +491,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(0).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -482,6 +504,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term3Course2">
@@ -497,6 +520,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -509,6 +533,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(1).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -521,6 +546,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
         //<editor-fold desc="Term3Course3">
@@ -536,6 +562,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 1);
         tempAssessment1.setAssessment_due(tempCalendar.getTime());
         tempAssessment1.setAssessment_alert_name("Alert For First Assessment");
+        tempAssessment1.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment1);
         tempAssessment2.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment2.setAssessment_name("Assessment 2");
@@ -548,6 +575,7 @@ public class PopulateDatabase extends AppCompatActivity {
         tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment2.setAssessment_due(tempCalendar.getTime());
         tempAssessment2.setAssessment_alert_name("Alert 2");
+        tempAssessment2.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment2);
         tempAssessment3.setCourse_id_fk(courseList.get(2).getCourse_id());//Select Course 0,1,2
         tempAssessment3.setAssessment_name("Assessment 3");
@@ -560,6 +588,7 @@ public class PopulateDatabase extends AppCompatActivity {
         //tempCalendar.add(Calendar.WEEK_OF_YEAR, 2);
         tempAssessment3.setAssessment_due(tempCalendar.getTime());
         tempAssessment3.setAssessment_alert_name("Alert 3");
+        tempAssessment3.setAssessment_alert_date(yesterday.getTime());
         db.assessmentDao().insertAssessment(tempAssessment3);
         //</editor-fold>
     }

@@ -34,8 +34,6 @@ public class Assessment {
     private String assessment_info;
     @ColumnInfo(name = "assessment_alert_name")
     private String assessment_alert_name;
-    @ColumnInfo(name = "assessment_alert_datetime")
-    private Date assessment_alert_datetime;
     @ColumnInfo(name = "assessment_status")
     private String assessment_status;
     @ColumnInfo(name = "assessment_alert_date")
@@ -95,14 +93,6 @@ public class Assessment {
 
     public void setAssessment_alert_name(String assessment_alert_name) {
         this.assessment_alert_name = assessment_alert_name;
-    }
-
-    public Date getAssessment_alert_datetime() {
-        return assessment_alert_datetime;
-    }
-
-    public void setAssessment_alert_datetime(Date assessment_alert_datetime) {
-        this.assessment_alert_datetime = assessment_alert_datetime;
     }
 
     public String getAssessment_status() {
