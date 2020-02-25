@@ -101,54 +101,44 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void updateViews(){
 
-        if (db.termDao().getTermList() != null) { //Don't update anything until there is something to update.
-            //--Count Pending/In-Progress Courses
-            //get full list of courses by get term count and loop through all appending courseList, loop through and count matches for strings "Pending" and "In-Progress"
-            List<Term> termList;
-            List<Course> fullCourseList;
-            List<Course> courseList;
-            termList = db.termDao().getTermList();
-            int termCount = termList.size();
-            if(db.courseDao().getCourseList(1) != null) { //Don't update unless there is at least one course
-                courseList = db.courseDao().getCourseList(1);
-                if (termCount >= 1) {
-                    for (int i = 1; i < termCount; i++) {
-                        courseList.addAll(db.courseDao().getCourseList(i+1));
-                    }
+        //todo new idea: write a query to get all Terms/Courses/Assessments in entire database instead of figuring out the array sizes.
+        int coursesPending = 0;
+        int coursesCompleted = 0;
+        int coursesDropped = 0;
+        int assessmentsPending = 0;
+        int assessmentsPassed = 0;
+        int assessmentsFailed = 0;
+        try {
+            List<Term> termList = db.termDao().getAllTerms();
+            List<Course> courseList = db.courseDao().getAllCourses();
+            List<Assessment> assessmentList = db.assessmentDao().getAllAssessments();
+
+            try {
+                for(int i = 0; i < courseList.size(); i++) {
+                    if(courseList.get(i).getCourse_status().contains("Pending")) coursesPending++;
+                    if(courseList.get(i).getCourse_status().contains("In-Progress")) coursesPending++;
+                    if(courseList.get(i).getCourse_status().contains("Completed")) coursesCompleted++;
+                    if(courseList.get(i).getCourse_status().contains("Dropped")) coursesDropped++;
+
                 }
-                //todo now loop through and count matching terms.
-                Log.d(LOG_TAG, "courseList Count: " + courseList.size());
-                int pendingCount = 0;
-                int completed = 0;
-                int dropped = 0;
-                for (int i = 0; i < courseList.size(); i++) {
-                    switch(courseList.get(i).getCourse_status())
-                    {
-                        case "Pending":
-                            pendingCount++;
-                            break;
-                        case "In-Progress":
-                            pendingCount++;
-                            break;
-                        case "Completed":
-                            completed++;
-                            break;
-                        case "Dropped":
-                            dropped++;
-                            break;
-                    }
-                }
-                Log.d(LOG_TAG, "pendingCount: " + pendingCount);
-                Log.d(LOG_TAG, "completed: " + completed);
-                Log.d(LOG_TAG, "dropped: " + dropped);
-                coursesPendingTextView.setText(String.valueOf(pendingCount));
-                coursesCompletedTextView.setText(String.valueOf(completed));
-                coursesDroppedTextView.setText(String.valueOf(dropped));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < assessmentList.size(); i++) {
+                if(assessmentList.get(i).getAssessment_status().contains("Pending")) assessmentsPending++;
+                if(assessmentList.get(i).getAssessment_status().contains("Passed")) assessmentsPassed++;
+                if(assessmentList.get(i).getAssessment_status().contains("Failed")) assessmentsFailed++;
             }
 
-
-            //--End Count Pending/In-Progress Courses
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        coursesPendingTextView.setText(String.valueOf(coursesPending));
+        coursesCompletedTextView.setText(String.valueOf(coursesCompleted));
+        coursesDroppedTextView.setText(String.valueOf(coursesDropped));
+        assessmentsPendingTextView.setText(String.valueOf(assessmentsPending));
+        assessmentsFailedTextView.setText(String.valueOf(assessmentsFailed));
+        assessmentsPassedTextView.setText(String.valueOf(assessmentsPassed));
     }
 
     @Override

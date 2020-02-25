@@ -20,6 +20,9 @@ public interface CourseDao {
             "VALUES(:termId, \"Course Name\"); ")
     void addCourse(int termId);
 
+    @Query("SELECT * FROM course_table")
+    List<Course> getAllCourses();
+
     @Insert
     void insertCourse(Course course);
 

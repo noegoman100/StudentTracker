@@ -16,6 +16,9 @@ public interface TermDao {
     @Query("SELECT * FROM term_table WHERE term_id = :termId ORDER BY term_id") //Make sure this only returns One result, or capture error.
     Term getTerm(int termId);
 
+    @Query("SELECT * FROM term_table")
+    List<Term> getAllTerms();
+
 //    @Query("SELECT * FROM course_table WHERE term_id = :selectedTerm")
 //    List<Course> getCourseList(int selectedTerm);
 //    @Query("SELECT * FROM course_table WHERE term_id_fk = :selectedTerm")

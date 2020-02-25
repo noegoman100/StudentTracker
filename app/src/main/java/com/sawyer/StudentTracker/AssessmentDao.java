@@ -19,6 +19,9 @@ public interface AssessmentDao {
 //    @Query("INSERT INTO assessment_table (course_id_fk, assessment_name, assessment_set_alert) VALUES(:courseId, :assessmentName, 0)")
 //    void addAssessment(int courseId, String assessmentName);
 
+    @Query("SELECT * FROM assessment_table")
+    List<Assessment> getAllAssessments();
+
     @Insert
     void insertAssessment(Assessment assessment);
 
