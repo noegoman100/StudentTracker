@@ -3,9 +3,12 @@ package com.sawyer.StudentTracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +35,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
     FullDatabase db;
     Button saveAssessmentButton;
     Button deleteAssessmentButton;
+    Button applyAlarmButton;
     int termId;
     int courseId;
     int assessmentId;
@@ -45,6 +49,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_assessment);
         setTitle("Edit Assessment");
         formatter = new SimpleDateFormat(getString(R.string.date_pattern));
+        createNotificationChannel();
         //----Attach Views to Fields
         assessmentTypeEditText = findViewById(R.id.assessmentTypeEditText);
         saveAssessmentButton = findViewById(R.id.saveAssessmentButton);
@@ -55,9 +60,31 @@ public class EditAssessmentActivity extends AppCompatActivity {
         setAlertCheckBox = findViewById(R.id.setAlertCheckBox);
         alertTitleEditText = findViewById(R.id.alertTitleEditText);
         alertStartDateEditText = findViewById(R.id.alertStartDate);
+        applyAlarmButton = findViewById(R.id.applyAlarmButton);
         //alertEndDateEditText = findViewById(R.id.alertEndDate);
         //----End Attach Views to Fields
         updateViews();
+        //------- Apply Alarm Button
+        applyAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "applyAlarmButton pressed");
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, -1);
+                Date alarmDate = calendar.getTime();
+                try {
+                    alarmDate = formatter.parse(alertStartDateEditText.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Log.d(LOG_TAG, "alarmDate not set properly");
+                }
+                setAlarm(alarmDate);
+                saveData();
+                finish();
+            }
+        });
+        //------- End Apply Alarm Button
         //------- Delete Assessment Button
             deleteAssessmentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,31 +94,14 @@ public class EditAssessmentActivity extends AppCompatActivity {
                 }
             });
         //------- End Delete Assessment Button
+
         //--------- Save Assessment Button
         saveAssessmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(EditAssessmentActivity.LOG_TAG, "Save Assessment Button Pressed");
-                selectedAssessment.setAssessment_type(assessmentTypeEditText.getText().toString());
-                selectedAssessment.setAssessment_name(assessmentTitleEditText.getText().toString());
-                selectedAssessment.setAssessment_info(assessmentInfoEditText.getText().toString());
-                //selectedAssessment.setAssessment_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
-                selectedAssessment.setAssessment_alert_name(alertTitleEditText.getText().toString());
 
-                try {
-                    selectedAssessment.setAssessment_alert_date(formatter.parse(alertStartDateEditText.getText().toString()));
-                    selectedAssessment.setAssessment_due(formatter.parse(assessmentDueDateEditText.getText().toString()));
-                    Log.d(LOG_TAG, "updated alert date");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                //---------------Set the Alarm(s)
-                if(setAlertCheckBox.isChecked()) {
-                    setAlarm(selectedAssessment.getAssessment_alert_date());
-                }
-                //---------------End Set the Alarm(s)
-                db.assessmentDao().updateAssessment(selectedAssessment);
-
+                saveData();
                 finish();
             }
         });
@@ -100,16 +110,54 @@ public class EditAssessmentActivity extends AppCompatActivity {
 
     }
 
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "StudentTrackerReminderChannel";
+            String description = "Channel for Student Tracker";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("studentTracker", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+
+    }
+
+//    private void setAlarm(Date dateProvided) { //todo Fix Alarms. Just make a damn notification. Make this a class
+//        Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
+//        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
+//            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//            Intent intent = new Intent(getApplicationContext(), EditAssessmentActivity.class);
+//            intent.putExtra("termId", termId);
+//            intent.putExtra("courseId", courseId);
+//            intent.putExtra("assessmentId", assessmentId);
+//            intent.putExtra("message", "Assessment Alert Triggered!");
+//            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+//            alarmManager.setExact(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
+//            Log.d(LOG_TAG, "The alarm was set for: " + formatter.format(dateProvided));
+//        } else {
+//            Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+
     private void setAlarm(Date dateProvided) {
+        Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
+        Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+        //todo addExtras to send over to ReminderBroadcast.
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        long futureTimeMillis = 1000 * 10;
+        try {
+            futureTimeMillis = formatter.parse(alertStartDateEditText.getText().toString()).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(getApplicationContext(), EditAssessmentActivity.class);
-            intent.putExtra("termId", termId);
-            intent.putExtra("courseId", courseId);
-            intent.putExtra("assessmentId", assessmentId);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Log.d(LOG_TAG, "The alarm was set");
+            alarmManager.set(AlarmManager.RTC, futureTimeMillis, pendingIntent);
         } else {
             Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
         }
@@ -148,5 +196,27 @@ public class EditAssessmentActivity extends AppCompatActivity {
             } else {System.out.println("Null Object");}
         } catch (Exception e) {System.out.println("selectedAssessment failed");}
         //---- End Update Views
+    }
+
+    public void saveData() {
+        selectedAssessment.setAssessment_type(assessmentTypeEditText.getText().toString());
+        selectedAssessment.setAssessment_name(assessmentTitleEditText.getText().toString());
+        selectedAssessment.setAssessment_info(assessmentInfoEditText.getText().toString());
+        //selectedAssessment.setAssessment_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
+        selectedAssessment.setAssessment_alert_name(alertTitleEditText.getText().toString());
+
+        try {
+            selectedAssessment.setAssessment_alert_date(formatter.parse(alertStartDateEditText.getText().toString()));
+            selectedAssessment.setAssessment_due(formatter.parse(assessmentDueDateEditText.getText().toString()));
+            Log.d(LOG_TAG, "updated alert date");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //---------------Set the Alarm(s)
+        if(setAlertCheckBox.isChecked()) {
+            setAlarm(selectedAssessment.getAssessment_alert_date());
+        }
+        //---------------End Set the Alarm(s)
+        db.assessmentDao().updateAssessment(selectedAssessment);
     }
 }

@@ -115,17 +115,19 @@ public class EditCourseActivity extends AppCompatActivity {
     }
 
     private void setAlarm(Date dateProvided, String name) {
+        Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
         if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(getApplicationContext(), CourseDetailsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), EditCourseActivity.class);
             intent.putExtra("termId", termId);
             intent.putExtra("courseId", courseId);
+            intent.putExtra("message", "Assessment Alert Triggered!");
             //intent.putExtra("assessmentId", assessmentId);
             PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Log.d(LOG_TAG, "The alarm was set");
+            alarmManager.setExact(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
+            Log.d(LOG_TAG, "The alarm was set for: " + formatter.format(dateProvided));
         } else {
-            Toast.makeText(getApplicationContext(),name + " is not in the Future.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),name + " is not in the Future.",Toast.LENGTH_LONG).show();
         }
     }
 }
