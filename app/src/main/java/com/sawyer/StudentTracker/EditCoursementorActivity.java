@@ -19,6 +19,7 @@ public class EditCoursementorActivity extends AppCompatActivity {
     EditText mentorPhoneEditText;
     EditText mentorEmailEditText;
     Button saveButton;
+    Button deleteMentorButton;
     FullDatabase db;
     Coursementor selectedCoursementor;
 
@@ -40,12 +41,12 @@ public class EditCoursementorActivity extends AppCompatActivity {
         mentorNameEditText = findViewById(R.id.mentorNameEditText);
         mentorPhoneEditText = findViewById(R.id.mentorPhoneEditText);
         saveButton =  findViewById(R.id.saveButton);
+        deleteMentorButton = findViewById(R.id.deleteMentorButton);
         //--------End Attach Views
         //--------Save Button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo Complete Me.
                 selectedCoursementor.setMentor_name(mentorNameEditText.getText().toString());
                 selectedCoursementor.setMentor_email(mentorEmailEditText.getText().toString());
                 selectedCoursementor.setMentor_phone(mentorPhoneEditText.getText().toString());
@@ -56,6 +57,15 @@ public class EditCoursementorActivity extends AppCompatActivity {
             }
         });
         //--------End Save Button
+        //--------- Delete Button
+        deleteMentorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.coursementorDao().deleteCoursementor(selectedCoursementor);
+                finish();
+            }
+        });
+        //--------- End Delete Button
 
         updateViews();
     }

@@ -69,12 +69,12 @@ public class HomePageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(LOG_TAG, "Nuke DB Button Pressed");
                 db.clearAllTables();
+                updateViews();
             }
         });
         //-------- End Create Nuke DB button programmatically
         //-------- Create Populate DB button programmatically
-        //ConstraintLayout myLayout = findViewById(R.id.homePageConstraintLayout);
-        //ConstraintSet set = new ConstraintSet();
+
         Button populateDBbutton = new Button(getApplicationContext());
         populateDBbutton.setText("Populate Empty Database");
         populateDBbutton.setId(R.id.populateDBButton);
@@ -94,6 +94,7 @@ public class HomePageActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "populate DB Button Pressed");
                 PopulateDatabase populateDatabase = new PopulateDatabase();
                 populateDatabase.populate(getApplicationContext());
+                updateViews();
             }
         });
         //-------- End Create Populate DB button programmatically

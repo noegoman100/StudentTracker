@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,12 +22,12 @@ public class EditCourseActivity extends AppCompatActivity {
     public static final String LOG_TAG = "EditCourseAct";
     Button deleteCourseButton;
     Button saveCourseButton;
+    Button applyAlarmButton;
     FullDatabase db;
     EditText courseTitleEditText;
     EditText courseStatusEditText;
     EditText courseStartDate;
     EditText courseEndDate;
-    CheckBox setAlarmsCheckBox;
     int termId;
     int courseId;
     Intent intent;
@@ -55,20 +53,41 @@ public class EditCourseActivity extends AppCompatActivity {
         courseStatusEditText = findViewById(R.id.courseStatusTextView);
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
-        setAlarmsCheckBox = findViewById(R.id.setAlarmsCheckBox);
+        applyAlarmButton = findViewById(R.id.applyCourseAlarmButton);
         //------------ End Attach Views
 
         updateViews();
+        //------- Apply Alarm Button
+        applyAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "applyAlarmButton pressed");
 
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, -1);
+                Date alarmDate1 = calendar.getTime();
+                Date alarmDate2 = calendar.getTime();
+                try {
+                    alarmDate1 = formatter.parse(courseStartDate.getText().toString());
+                    alarmDate2 = formatter.parse(courseEndDate.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Log.d(LOG_TAG, "alarmDate not set properly");
+                }
+                setAlarm(alarmDate1);
+                setAlarm(alarmDate2);
+
+                saveData();
+                finish();
+            }
+        });
+        //------- End Apply Alarm Button
         //----------- Delete Course Button
         deleteCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 db.courseDao().deleteCourse(selectedCourse);
-                //finish();
-                Intent intent = new Intent(getApplicationContext(), TermDetailsActivity.class);
-                intent.putExtra("termId", selectedCourse.getTerm_id_fk());
-                startActivity(intent);
+                finish();
             }
         });
         //----------- End Delete Course Button
@@ -76,25 +95,7 @@ public class EditCourseActivity extends AppCompatActivity {
         saveCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //---Update selectedCourse with EditText data, then Update in Database
-                selectedCourse.setCourse_status(courseStatusEditText.getText().toString());
-                selectedCourse.setCourse_name(courseTitleEditText.getText().toString());
-                try {
-                    selectedCourse.setCourse_start(formatter.parse(courseStartDate.getText().toString()));
-                    selectedCourse.setCourse_end(formatter.parse(courseEndDate.getText().toString()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                //------SetAlarms
-                if(setAlarmsCheckBox.isChecked()) {
-                    setAlarm(selectedCourse.getCourse_start(), "Start Date");
-                    setAlarm(selectedCourse.getCourse_end(), "End Date");
-                }
-                //------End SetAlarms
-
-                db.courseDao().updateCourse(selectedCourse);
-                //---End Update
+                saveData();
                 finish();
             }
         });
@@ -114,20 +115,34 @@ public class EditCourseActivity extends AppCompatActivity {
         //-------End Update Views
     }
 
-    private void setAlarm(Date dateProvided, String name) {
-        Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
-        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(getApplicationContext(), EditCourseActivity.class);
-            intent.putExtra("termId", termId);
-            intent.putExtra("courseId", courseId);
-            intent.putExtra("message", "Assessment Alert Triggered!");
-            //intent.putExtra("assessmentId", assessmentId);
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-            alarmManager.setExact(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Log.d(LOG_TAG, "The alarm was set for: " + formatter.format(dateProvided));
+    private void setAlarm(Date dateProvided) {
+        Calendar calendarNow = Calendar.getInstance();
+        if (dateProvided.getTime() > calendarNow.getTime().getTime()) {
+            Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
+            Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
+            intent.putExtra("message", "Alarm Set for: " + formatter.format(dateProvided));
+            intent.putExtra("title", "Alert");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
+            Toast.makeText(getApplicationContext(),"Alarm Set for: " + formatter.format(dateProvided),Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(),name + " is not in the Future.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveData(){
+        //---Update selectedCourse with EditText data, then Update in Database
+        selectedCourse.setCourse_status(courseStatusEditText.getText().toString());
+        selectedCourse.setCourse_name(courseTitleEditText.getText().toString());
+        try {
+            selectedCourse.setCourse_start(formatter.parse(courseStartDate.getText().toString()));
+            selectedCourse.setCourse_end(formatter.parse(courseEndDate.getText().toString()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        db.courseDao().updateCourse(selectedCourse);
+        //---End Update
     }
 }

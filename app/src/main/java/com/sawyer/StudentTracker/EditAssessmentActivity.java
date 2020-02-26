@@ -6,7 +6,6 @@ import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,11 +56,9 @@ public class EditAssessmentActivity extends AppCompatActivity {
         assessmentTitleEditText = findViewById(R.id.assessmentTitileEditText);
         assessmentDueDateEditText = findViewById(R.id.assessmentDueDateEditText);
         assessmentInfoEditText = findViewById(R.id.assessmentInfoEditText);
-        setAlertCheckBox = findViewById(R.id.setAlertCheckBox);
         alertTitleEditText = findViewById(R.id.alertTitleEditText);
         alertStartDateEditText = findViewById(R.id.alertStartDate);
         applyAlarmButton = findViewById(R.id.applyAlarmButton);
-        //alertEndDateEditText = findViewById(R.id.alertEndDate);
         //----End Attach Views to Fields
         updateViews();
         //------- Apply Alarm Button
@@ -125,41 +122,20 @@ public class EditAssessmentActivity extends AppCompatActivity {
 
     }
 
-//    private void setAlarm(Date dateProvided) { //todo Fix Alarms. Just make a damn notification. Make this a class
-//        Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
-//        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
-//            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//            Intent intent = new Intent(getApplicationContext(), EditAssessmentActivity.class);
-//            intent.putExtra("termId", termId);
-//            intent.putExtra("courseId", courseId);
-//            intent.putExtra("assessmentId", assessmentId);
-//            intent.putExtra("message", "Assessment Alert Triggered!");
-//            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
-//            alarmManager.setExact(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-//            Log.d(LOG_TAG, "The alarm was set for: " + formatter.format(dateProvided));
-//        } else {
-//            Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 
     private void setAlarm(Date dateProvided) {
-        Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
-        Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-        //todo addExtras to send over to ReminderBroadcast.
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        long futureTimeMillis = 1000 * 10;
-        try {
-            futureTimeMillis = formatter.parse(alertStartDateEditText.getText().toString()).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (dateProvided.compareTo(Calendar.getInstance().getTime()) > 0) {
-            alarmManager.set(AlarmManager.RTC, futureTimeMillis, pendingIntent);
+        Calendar calendarNow = Calendar.getInstance();
+        if (dateProvided.getTime() > calendarNow.getTime().getTime()) {
+            Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
+            Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
+            intent.putExtra("message", "Alarm Set for: " + formatter.format(dateProvided));
+            intent.putExtra("title", "Alert");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
+            Toast.makeText(getApplicationContext(), "Alarm Set for: " + formatter.format(dateProvided), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(),"Alarm is not in the Future.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -188,7 +164,6 @@ public class EditAssessmentActivity extends AppCompatActivity {
                 assessmentTypeEditText.setText(selectedAssessment.getAssessment_type());
                 assessmentTitleEditText.setText(selectedAssessment.getAssessment_name());
                 assessmentInfoEditText.setText(selectedAssessment.getAssessment_info());
-                //setAlertCheckBox.setChecked((selectedAssessment.getAssessment_set_alert()==1)?true:false);
                 alertTitleEditText.setText(selectedAssessment.getAssessment_alert_name());
                 alertStartDateEditText.setText(formatter.format(selectedAssessment.getAssessment_alert_date()));
                 assessmentDueDateEditText.setText(formatter.format(selectedAssessment.getAssessment_due()));
@@ -202,7 +177,6 @@ public class EditAssessmentActivity extends AppCompatActivity {
         selectedAssessment.setAssessment_type(assessmentTypeEditText.getText().toString());
         selectedAssessment.setAssessment_name(assessmentTitleEditText.getText().toString());
         selectedAssessment.setAssessment_info(assessmentInfoEditText.getText().toString());
-        //selectedAssessment.setAssessment_set_alert((setAlertCheckBox.isChecked())?1:0);  //Set to One if Checked. 0 if not checked.
         selectedAssessment.setAssessment_alert_name(alertTitleEditText.getText().toString());
 
         try {
@@ -212,11 +186,13 @@ public class EditAssessmentActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //---------------Set the Alarm(s)
-        if(setAlertCheckBox.isChecked()) {
-            setAlarm(selectedAssessment.getAssessment_alert_date());
-        }
-        //---------------End Set the Alarm(s)
+
         db.assessmentDao().updateAssessment(selectedAssessment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateViews();
     }
 }
