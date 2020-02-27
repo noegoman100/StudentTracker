@@ -82,7 +82,6 @@ public class TermDetailsActivity extends AppCompatActivity {
                 tempCourse.setCourse_end(calendar.getTime());
                 tempCourse.setCourse_status("Active Status");
                 tempCourse.setTerm_id_fk(termId);
-                //db.courseDao().addCourse(tempCourse);
                 db.courseDao().insertCourse(tempCourse);
                 updateCourseList();
                 System.out.println("addCourseFAB clicked");
@@ -91,7 +90,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
 // -------------- End FAB Add Stuff
 
-// -------------- FAB Edit Stuff
+// -------------- FAB Edit Term
         FloatingActionButton editTermFAB = findViewById(R.id.editCourseFAB);
         editTermFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +98,6 @@ public class TermDetailsActivity extends AppCompatActivity {
                 System.out.println("FAB Edit stuff pressed. ");
                 Term tempTerm = db.termDao().getTerm(termId);
                 System.out.println("Current Term Name: " + tempTerm.getTerm_name());
-                //db.termDao().deleteTerm(tempTerm);
-                //updateCourseList();
-                //finish();
                 Intent intent = new Intent(getApplicationContext(), EditTermActivity.class);
                 intent.putExtra("termId", termId);
 
@@ -109,14 +105,11 @@ public class TermDetailsActivity extends AppCompatActivity {
             }
         });
 
-// -------------- End FAB Edit Stuff
+// -------------- End FAB Edit Term
 
     }
 
     private void updateCourseList() { //This updates the listView on this termListActivity
-        //FullDatabase db = FullDatabase.getInstance(getApplicationContext());
-        //intent = getIntent();
-        //int selectedTerm = intent.getIntExtra("", 0);
         List<Course> allCourses = new ArrayList<>();
         try {
             allCourses = db.courseDao().getCourseList(termId);
@@ -171,7 +164,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         }
         //----- End Update Views
         //-----Update the Title + Percent Complete
-        String newTitle = "Term: " + selectedTerm.getTerm_name() + ": " + percentComplete(); //todo .getTerm_name is crashing app
+        String newTitle = "Term: " + selectedTerm.getTerm_name() + ": " + percentComplete();
 
         setTitle(newTitle);
         //-----Update the Title + Percent Complete

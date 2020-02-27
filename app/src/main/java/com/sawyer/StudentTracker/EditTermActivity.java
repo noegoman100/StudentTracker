@@ -65,7 +65,6 @@ public class EditTermActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!db.courseDao().getCourseList(termId).isEmpty()){
                     Toast.makeText(getApplicationContext(),"Courses Still Present",Toast.LENGTH_SHORT).show();
-                    //todo send out a toast
                 } else {
                     db.termDao().deleteTerm(selectedTerm);
                     Intent intent = new Intent(getApplicationContext(), TermListActivity.class);

@@ -43,7 +43,6 @@ public class MentorsListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(LOG_TAG, "Add Mentors Button Pressed");
                 Coursementor tempCoursementor = new Coursementor();
-                //TODO implement add new Coursementor
                 tempCoursementor.setMentor_name("New Course Mentor");
                 tempCoursementor.setCourse_id_fk(courseId);
                 tempCoursementor.setMentor_email("New Mentor Email");

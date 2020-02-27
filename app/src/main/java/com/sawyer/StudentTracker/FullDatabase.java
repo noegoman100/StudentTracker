@@ -18,7 +18,6 @@ public abstract class FullDatabase extends RoomDatabase {
     public static synchronized FullDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), FullDatabase.class, DB_NAME).allowMainThreadQueries().build();
-            //instance = Room.databaseBuilder(context.getApplicationContext(), FullDatabase.class, DB_NAME).build(); //todo run DB on another thread.
 
         }
         return instance;

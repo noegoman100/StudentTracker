@@ -83,7 +83,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
 
 
-        // -------------- FAB Add Stuff
+        // -------------- FAB Add Assessments
         FloatingActionButton addAssessmentFAB = findViewById(R.id.addAssessmentFAB);
         addAssessmentFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +109,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             }
         });
 
-        // -------------- End FAB Add Stuff
+        // -------------- End FAB Add Assessments
         // -------------- FAB Edit Course
         FloatingActionButton editCourseFAB = findViewById(R.id.editCourseFAB);
         editCourseFAB.setOnClickListener(new View.OnClickListener() {

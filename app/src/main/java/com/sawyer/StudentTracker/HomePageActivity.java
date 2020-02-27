@@ -102,7 +102,6 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void updateViews(){
 
-        //todo new idea: write a query to get all Terms/Courses/Assessments in entire database instead of figuring out the array sizes.
         int coursesPending = 0;
         int coursesCompleted = 0;
         int coursesDropped = 0;

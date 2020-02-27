@@ -59,27 +59,8 @@ public class CourseNotesActivity extends AppCompatActivity {
         sendSMSButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo test this button on a physical phone
                 Log.d(LOG_TAG, "sms Button clicked with number: " + smsPhoneEditText.getText().toString());
-//                Intent clickIntent = new Intent(Intent.ACTION_VIEW);
-//                clickIntent.putExtra("address", new String(smsPhoneEditText.getText().toString()));
-//                clickIntent.putExtra("sms_body",notesEditText.getText().toString());
-//                startActivity(Intent.createChooser(clickIntent, "Send sms via:"));
-
-
-//                Intent clickIntent = new Intent(Intent.ACTION_VIEW);
-//                clickIntent.putExtra("sms_body", "default content");
-//                clickIntent.setType("vnd.android-dir/mms-sms");
-//                startActivity(clickIntent);
-
-//                String message = notesEditText.getText().toString();
-//                String phoneNo = smsPhoneEditText.getText().toString();
-//                SmsManager smsManager = SmsManager.getDefault();
-//                smsManager.sendTextMessage(phoneNo, null, message, null, null);
-
                 sendSmsBySIntent(smsPhoneEditText.getText().toString(), notesEditText.getText().toString());
-
-
                 Log.d(LOG_TAG, "Completed SMS Button OnClickListener");
             }
         });
@@ -89,7 +70,6 @@ public class CourseNotesActivity extends AppCompatActivity {
 
     private void updateViews() {
         notesEditText.setText(selectedCourse.getCourse_notes());
-
     }
 
     public void sendSmsBySIntent(String phoneNumber, String smsBody) {
