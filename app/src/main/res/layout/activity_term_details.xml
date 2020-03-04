@@ -78,4 +78,22 @@
 
     </ListView>
 
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Date:"
+        app:layout_constraintEnd_toStartOf="@+id/termStartTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/termStartTextView" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Date:"
+        app:layout_constraintEnd_toStartOf="@+id/termEndTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/termEndTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
