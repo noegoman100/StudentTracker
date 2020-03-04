@@ -164,7 +164,7 @@ public class TermDetailsActivity extends AppCompatActivity {
         }
         //----- End Update Views
         //-----Update the Title + Percent Complete
-        String newTitle = "Term: " + selectedTerm.getTerm_name() + ": " + percentComplete();
+        String newTitle = "Term Details: " + selectedTerm.getTerm_name() + ": " + percentComplete();
 
         setTitle(newTitle);
         //-----Update the Title + Percent Complete

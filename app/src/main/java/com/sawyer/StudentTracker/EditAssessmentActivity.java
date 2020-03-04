@@ -57,6 +57,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
         assessmentDueDateEditText = findViewById(R.id.assessmentDueDateEditText);
         assessmentInfoEditText = findViewById(R.id.assessmentInfoEditText);
         alertTitleEditText = findViewById(R.id.alertTitleEditText);
+            alertTitleEditText.setVisibility(View.INVISIBLE);
         alertStartDateEditText = findViewById(R.id.alertStartDate);
         applyAlarmButton = findViewById(R.id.applyAlarmButton);
         //----End Attach Views to Fields

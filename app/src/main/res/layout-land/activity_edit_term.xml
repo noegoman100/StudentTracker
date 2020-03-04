@@ -61,24 +61,22 @@
         app:layout_constraintTop_toBottomOf="@+id/termStartDate" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="11dp"
-        android:text="Start"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Term Start Date"
         app:layout_constraintEnd_toStartOf="@+id/termStartDate"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/termStartDate" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:text="End"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        android:text="Term End Date"
         app:layout_constraintEnd_toStartOf="@+id/termEndDate"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/termEndDate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

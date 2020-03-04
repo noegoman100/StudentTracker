@@ -187,7 +187,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         //----------Update Views
         selectedCourse = db.courseDao().getCourse(termId, courseId);
-        setTitle(selectedCourse.getCourse_name() + ": " + percentComplete());
+        setTitle("Course Details: " + selectedCourse.getCourse_name() + ": " + percentComplete());
 
         if (selectedCourse != null) {
             Log.d(CourseDetailsActivity.LOG_TAG, "selectedCourse is Not null");
