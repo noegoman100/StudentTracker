@@ -126,4 +126,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/alertStartDate" />
 
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Type"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentTypeEditText"
+        app:layout_constraintTop_toTopOf="@+id/assessmentTypeEditText" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        android:text="Title"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentTitileEditText"
+        app:layout_constraintTop_toTopOf="@+id/assessmentTitileEditText" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:text="Info"
+        app:layout_constraintEnd_toStartOf="@+id/assessmentInfoEditText"
+        app:layout_constraintTop_toTopOf="@+id/assessmentInfoEditText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
