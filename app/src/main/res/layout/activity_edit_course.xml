@@ -78,9 +78,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
         android:text="Start Date"
         app:layout_constraintEnd_toStartOf="@+id/courseStartDate"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/courseStartDate" />
 
     <TextView
@@ -88,10 +88,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
         android:text="End Date"
         app:layout_constraintEnd_toStartOf="@+id/courseEndDate"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/courseEndDate" />
 
     <Button
@@ -103,5 +102,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseStatusTextView" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        android:text="Status"
+        app:layout_constraintEnd_toStartOf="@+id/courseStatusTextView"
+        app:layout_constraintTop_toTopOf="@+id/courseStatusTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

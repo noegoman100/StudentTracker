@@ -92,8 +92,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Course Status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/courseEndDate"
         app:layout_constraintTop_toBottomOf="@+id/courseEndDate" />
 
     <ListView
@@ -126,4 +125,13 @@
         android:text="End Date"
         app:layout_constraintStart_toStartOf="@+id/textView11"
         app:layout_constraintTop_toTopOf="@+id/courseEndDate" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Status"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/courseStatusTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
