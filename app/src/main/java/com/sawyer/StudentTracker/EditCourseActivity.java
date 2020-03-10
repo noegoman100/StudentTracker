@@ -76,7 +76,7 @@ public class EditCourseActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Log.d(LOG_TAG, "end alarmDate not set properly");
                 }
-                setAlarm(alarmDate1, 100);
+                setAlarm(alarmDate1, courseId + 100);
                 //setAlarm(alarmDate2);
 
                 saveData();
@@ -102,7 +102,7 @@ public class EditCourseActivity extends AppCompatActivity {
                     Log.d(LOG_TAG, "end alarmDate not set properly");
                 }
                 //setAlarm(alarmDate1);
-                setAlarm(alarmDate2, 101);
+                setAlarm(alarmDate2, courseId + 200);
 
                 saveData();
                 finish();
@@ -153,9 +153,9 @@ public class EditCourseActivity extends AppCompatActivity {
             intentAlarm.putExtra("message", "Alarm for Course: '" + courseTitleEditText.getText().toString()
                             + "' was set for: " + formatter.format(dateProvided));
             intentAlarm.putExtra("title", "Alert");
-            int random = (int) ((Math.random() * 100)+100);
-            Log.d(LOG_TAG, "Random number generated: " + random);
-            intentAlarm.putExtra("notificationID", random);
+            //int random = (int) ((Math.random() * 1000)+100);
+            //Log.d(LOG_TAG, "Random number generated: " + random);
+            intentAlarm.putExtra("notificationID", requestCode);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);

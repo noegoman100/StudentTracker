@@ -34,6 +34,7 @@ public class ReminderBroadcast extends BroadcastReceiver {
         int notificationID = incomingIntent.getIntExtra("notificationID", 666);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(notificationID, builder.build());
+        //notificationManager.notify(200, builder.build());
         Log.d("ReminderBroadcast", "NotificationID: " + notificationID);
     }
 }

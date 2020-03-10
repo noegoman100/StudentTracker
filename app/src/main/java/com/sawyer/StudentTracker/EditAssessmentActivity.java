@@ -130,13 +130,14 @@ public class EditAssessmentActivity extends AppCompatActivity {
         if (dateProvided.getTime() > calendarNow.getTime().getTime()) {
             Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
             Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
-            intent.putExtra("message", "Alarm for Assessment: '" + currentAssessment.getAssessment_name()
+            intent.putExtra("message", "Alarm for Assessment: '" + assessmentTitleEditText.getText().toString()
                             + "' was set for: " + formatter.format(dateProvided) );
             intent.putExtra("title", "Alert");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 102, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            intent.putExtra("notificationID", assessmentId);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), assessmentId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Toast.makeText(getApplicationContext(), "Alarm Set for Assessment: '" + currentAssessment.getAssessment_name()
+            Toast.makeText(getApplicationContext(), "Alarm Set for Assessment: '" + assessmentTitleEditText.getText().toString()
                     + "' for date: " + formatter.format(dateProvided), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_LONG).show();
