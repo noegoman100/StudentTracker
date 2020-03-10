@@ -48,7 +48,7 @@ public class EditAssessmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_assessment);
         setTitle("Edit Assessment");
         formatter = new SimpleDateFormat(getString(R.string.date_pattern));
-        createNotificationChannel();
+        //createNotificationChannel();
         //----Attach Views to Fields
         assessmentTypeEditText = findViewById(R.id.assessmentTypeEditText);
         saveAssessmentButton = findViewById(R.id.saveAssessmentButton);
@@ -126,17 +126,20 @@ public class EditAssessmentActivity extends AppCompatActivity {
 
     private void setAlarm(Date dateProvided) {
         Calendar calendarNow = Calendar.getInstance();
+        Assessment currentAssessment = db.assessmentDao().getAssessment(courseId, assessmentId);
         if (dateProvided.getTime() > calendarNow.getTime().getTime()) {
             Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
             Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
-            intent.putExtra("message", "Alarm Set for: " + formatter.format(dateProvided));
+            intent.putExtra("message", "Alarm for Assessment: '" + currentAssessment.getAssessment_name()
+                            + "' was set for: " + formatter.format(dateProvided) );
             intent.putExtra("title", "Alert");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 102, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Toast.makeText(getApplicationContext(), "Alarm Set for: " + formatter.format(dateProvided), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Alarm Set for Assessment: '" + currentAssessment.getAssessment_name()
+                    + "' for date: " + formatter.format(dateProvided), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_LONG).show();
         }
     }
 

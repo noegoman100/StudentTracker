@@ -22,7 +22,8 @@ public class EditCourseActivity extends AppCompatActivity {
     public static final String LOG_TAG = "EditCourseAct";
     Button deleteCourseButton;
     Button saveCourseButton;
-    Button applyAlarmButton;
+    Button applyCourseStartAlarmButton;
+    Button applyCourseEndAlarmButton;
     FullDatabase db;
     EditText courseTitleEditText;
     EditText courseStatusEditText;
@@ -53,35 +54,61 @@ public class EditCourseActivity extends AppCompatActivity {
         courseStatusEditText = findViewById(R.id.courseStatusTextView);
         courseStartDate = findViewById(R.id.courseStartDate);
         courseEndDate = findViewById(R.id.courseEndDate);
-        applyAlarmButton = findViewById(R.id.applyCourseAlarmButton);
+        applyCourseStartAlarmButton = findViewById(R.id.applyCourseStartAlarmButton);
+        applyCourseEndAlarmButton = findViewById(R.id.applyCourseEndAlarmButton);
         //------------ End Attach Views
 
         updateViews();
-        //------- Apply Alarm Button
-        applyAlarmButton.setOnClickListener(new View.OnClickListener() {
+        //------- Apply Alarm Start Button
+        applyCourseStartAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "applyAlarmButton pressed");
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, -1); //Make sure I'm in the past when initialized, so it won't work unless replaced by user data.
+                Date alarmDate1 = calendar.getTime();
+                //Date alarmDate2 = calendar.getTime();
+                try {
+                    alarmDate1 = formatter.parse(courseStartDate.getText().toString());
+                    //alarmDate2 = formatter.parse(courseEndDate.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Log.d(LOG_TAG, "end alarmDate not set properly");
+                }
+                setAlarm(alarmDate1, 100);
+                //setAlarm(alarmDate2);
+
+                saveData();
+                finish();
+            }
+        });
+        //------- End Apply Alarm Start Button
+        //------- Apply Alarm End Button
+        applyCourseEndAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(LOG_TAG, "applyAlarmButton pressed");
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_YEAR, -1);
-                Date alarmDate1 = calendar.getTime();
+                //Date alarmDate1 = calendar.getTime();
                 Date alarmDate2 = calendar.getTime();
                 try {
-                    alarmDate1 = formatter.parse(courseStartDate.getText().toString());
+                    //alarmDate1 = formatter.parse(courseStartDate.getText().toString());
                     alarmDate2 = formatter.parse(courseEndDate.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
-                    Log.d(LOG_TAG, "alarmDate not set properly");
+                    Log.d(LOG_TAG, "end alarmDate not set properly");
                 }
-                setAlarm(alarmDate1);
-                setAlarm(alarmDate2);
+                //setAlarm(alarmDate1);
+                setAlarm(alarmDate2, 101);
 
                 saveData();
                 finish();
             }
         });
-        //------- End Apply Alarm Button
+        //------- End Apply Alarm End Button
         //----------- Delete Course Button
         deleteCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,19 +142,27 @@ public class EditCourseActivity extends AppCompatActivity {
         //-------End Update Views
     }
 
-    private void setAlarm(Date dateProvided) {
+    private void setAlarm(Date dateProvided, int requestCode) {
         Calendar calendarNow = Calendar.getInstance();
+
+
+        //Course currentCourse = db.courseDao().getCourse(termId, courseId);
         if (dateProvided.getTime() > calendarNow.getTime().getTime()) {
             Log.d(LOG_TAG, "Date Provided: " + formatter.format(dateProvided));
-            Intent intent = new Intent(getApplicationContext(), ReminderBroadcast.class);
-            intent.putExtra("message", "Alarm Set for: " + formatter.format(dateProvided));
-            intent.putExtra("title", "Alert");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+            Intent intentAlarm = new Intent(getApplicationContext(), ReminderBroadcast.class);
+            intentAlarm.putExtra("message", "Alarm for Course: '" + courseTitleEditText.getText().toString()
+                            + "' was set for: " + formatter.format(dateProvided));
+            intentAlarm.putExtra("title", "Alert");
+            int random = (int) ((Math.random() * 100)+100);
+            Log.d(LOG_TAG, "Random number generated: " + random);
+            intentAlarm.putExtra("notificationID", random);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), requestCode, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC, dateProvided.getTime(), pendingIntent);
-            Toast.makeText(getApplicationContext(),"Alarm Set for: " + formatter.format(dateProvided),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Alarm set for course: '" + courseTitleEditText.getText().toString() + "'\n"
+                    + "at time: " + formatter.format(dateProvided),Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Date: " + formatter.format(dateProvided) + " not in the future",Toast.LENGTH_LONG).show();
         }
     }
 

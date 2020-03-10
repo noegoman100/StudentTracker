@@ -94,14 +94,25 @@
         app:layout_constraintTop_toTopOf="@+id/courseEndDate" />
 
     <Button
-        android:id="@+id/applyCourseAlarmButton"
+        android:id="@+id/applyCourseStartAlarmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Apply Start+End Alarms"
+        android:text="Apply Start Date Alarm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseStatusTextView" />
+
+    <Button
+        android:id="@+id/applyCourseEndAlarmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Apply End Date Alarm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/applyCourseStartAlarmButton" />
 
     <TextView
         android:id="@+id/textView27"
